@@ -11,7 +11,7 @@ namespace Renderer
 	{
 	public:
 		SimpleRenderable();
-		~SimpleRenderable();
+		virtual ~SimpleRenderable();
 
 		void CreateFromList(std::vector<VertexFormat> vertices);
 

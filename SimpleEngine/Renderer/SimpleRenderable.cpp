@@ -10,6 +10,7 @@ namespace Renderer
 	{
 	}
 
+	//virtual
 	SimpleRenderable::~SimpleRenderable()
 	{
 		glDeleteBuffers(1, &_vbo);
