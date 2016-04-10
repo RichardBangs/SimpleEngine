@@ -28,3 +28,6 @@
 *.app
 
 .vs/*
+External/*
+*.sdf
+**/Debug/*
