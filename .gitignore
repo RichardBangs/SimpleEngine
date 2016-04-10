@@ -31,3 +31,5 @@
 External/*
 *.sdf
 **/Debug/*
+
+*.opendb
