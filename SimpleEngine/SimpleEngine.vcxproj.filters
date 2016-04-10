@@ -45,6 +45,9 @@
     <ClCompile Include="Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\QuadRenderable.cpp">
+      <Filter>Source Files\Renderer\Renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\VertexFormat.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\QuadRenderable.h">
+      <Filter>Source Files\Renderer\Renderables</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

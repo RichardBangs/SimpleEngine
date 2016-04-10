@@ -18,6 +18,7 @@ namespace Renderer
 
 		static std::vector<unsigned int> _programs;
 
+
 		static std::string ReadShader(const char* filename);
 		static unsigned int CreateShader(GLenum shaderType, const std::string source, const char* shaderName);
 	};
