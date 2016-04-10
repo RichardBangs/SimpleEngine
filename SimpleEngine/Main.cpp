@@ -59,14 +59,6 @@ void SetupScene()
 {
 	Renderer::RenderableManager::Create();
 
-/*	std::vector<Renderer::VertexFormat> vertices;
-	vertices.push_back(Renderer::VertexFormat(glm::vec3(0.25f, -0.25f, 0.0f)));
-	vertices.push_back(Renderer::VertexFormat(glm::vec3(-0.25f, -0.25f, 0.0f)));
-	vertices.push_back(Renderer::VertexFormat(glm::vec3(0.25f, 0.25f, 0.0f)));
-
-	auto simpleRenderable = new Renderer::SimpleRenderable();
-	simpleRenderable->CreateFromList(vertices);*/
-
 	auto quadRenderable = new Renderer::QuadRenderable();
 
 	unsigned int simpleShaders = Renderer::ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
