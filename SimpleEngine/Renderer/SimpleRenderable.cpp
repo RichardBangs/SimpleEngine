@@ -18,9 +18,15 @@ namespace Renderer
 
 	void SimpleRenderable::CreateFromList(std::vector<VertexFormat> vertices)
 	{
+		glGenBuffers(1, &_vbo);
+
+		UpdateFromList(vertices);
+	}
+
+	void SimpleRenderable::UpdateFromList(std::vector<VertexFormat> vertices)
+	{
 		_triangleCount = vertices.size();
 
-		glGenBuffers(1, &_vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(VertexFormat) * _triangleCount, &vertices[0], GL_STATIC_DRAW);
 	}

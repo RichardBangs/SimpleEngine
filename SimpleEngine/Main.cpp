@@ -17,6 +17,7 @@ extern void SetupOpenGLWindow(int argc, char** argv);
 extern void OnRender();
 extern void SetupScene();
 extern void OnClose();
+extern void OnTick(int timerId);
 
 int main(int argc, char** argv)
 {
@@ -49,20 +50,32 @@ void SetupOpenGLWindow(int argc, char** argv)
 
 	glutDisplayFunc(OnRender);
 	glutCloseFunc(OnClose);
+	glutTimerFunc(1, OnTick, 0);
 
 	SetupScene();
 
 	glutMainLoop();
 }
 
+Renderer::QuadRenderable* quad;
+glm::vec3 pos;
+
 void SetupScene()
 {
 	Renderer::RenderableManager::Create();
 
 	auto quadRenderable = new Renderer::QuadRenderable();
+	quad = quadRenderable;
 
 	unsigned int simpleShaders = Renderer::ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
 	quadRenderable->SetShader(simpleShaders);
+}
+
+void OnUpdate(float dt)
+{
+	pos.x += 0.01f;
+	quad->SetPosition(pos);
+	quad->SetSize(glm::vec2(pos.x, 1.0f));
 }
 
 void OnRender()
@@ -73,6 +86,14 @@ void OnRender()
 	Renderer::RenderableManager::Instance().Render();
 
 	glutSwapBuffers();
+}
+
+void OnTick(int timerId)
+{
+	OnUpdate(1.0f/60.0f);
+	OnRender();
+
+	glutTimerFunc(1000 / 60, OnTick, 0);
 }
 
 void OnClose()

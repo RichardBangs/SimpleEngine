@@ -10,13 +10,14 @@ namespace Renderer
 
 		virtual void Render() = 0;
 
-		void SetShader(unsigned int program);
+		virtual void SetShader(unsigned int program);
 
 	protected:
 
+		unsigned int _program;
+
 	private:
 		friend class RenderableManager;
-
-		unsigned int _program;
+		
 	};
 }
