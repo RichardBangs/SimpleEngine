@@ -69,7 +69,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Libs\glut\include;$(SolutionDir)Libs\glew\include;$(SolutionDir)Libs\glm\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Libs\glut\include;$(SolutionDir)Libs\glew\include;$(SolutionDir)Libs\glm\include;$(SolutionDir)SimpleEngine;$(SolutionDir)Libs;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Libs\glew\lib;$(SolutionDir)Libs\glut\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -124,6 +124,7 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Libs\lodepng\lodepng.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Renderer\BaseRenderable.cpp" />
@@ -131,15 +132,18 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClCompile Include="Renderer\RenderableManager.cpp" />
     <ClCompile Include="Renderer\ShaderLoader.cpp" />
     <ClCompile Include="Renderer\SimpleRenderable.cpp" />
+    <ClCompile Include="Renderer\Textures\TextureLoader.cpp" />
     <ClCompile Include="Renderer\VertexFormat.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Libs\lodepng\lodepng.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Renderer\BaseRenderable.h" />
     <ClInclude Include="Renderer\QuadRenderable.h" />
     <ClInclude Include="Renderer\RenderableManager.h" />
     <ClInclude Include="Renderer\ShaderLoader.h" />
     <ClInclude Include="Renderer\SimpleRenderable.h" />
+    <ClInclude Include="Renderer\Textures\TextureLoader.h" />
     <ClInclude Include="Renderer\VertexFormat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

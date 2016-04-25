@@ -52,9 +52,6 @@ namespace Renderer
 		{
 			BaseRenderable* renderable = static_cast<BaseRenderable*>(*it);
 
-			unsigned int program = renderable->_program;
-			glUseProgram(program);
-
 			renderable->Render();
 		}
 	}

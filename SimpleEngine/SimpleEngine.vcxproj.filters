@@ -22,6 +22,12 @@
     <Filter Include="Source Files\Renderer\Shaders">
       <UniqueIdentifier>{4062abed-cf99-4895-bb75-cab3a76712f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Renderer\Textures">
+      <UniqueIdentifier>{1f14458e-eeca-4fb1-833f-5b859b1fa305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lodepng">
+      <UniqueIdentifier>{c02dbe9d-142e-4970-877c-d5905fa68c0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -48,6 +54,12 @@
     <ClCompile Include="Renderer\QuadRenderable.cpp">
       <Filter>Source Files\Renderer\Renderables</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\Textures\TextureLoader.cpp">
+      <Filter>Source Files\Renderer\Textures</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libs\lodepng\lodepng.cpp">
+      <Filter>lodepng</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\VertexFormat.h">
@@ -70,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\QuadRenderable.h">
       <Filter>Source Files\Renderer\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Textures\TextureLoader.h">
+      <Filter>Source Files\Renderer\Textures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libs\lodepng\lodepng.h">
+      <Filter>lodepng</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

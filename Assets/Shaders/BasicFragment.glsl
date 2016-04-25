@@ -2,9 +2,11 @@
 layout(location = 0) out vec4 out_color;
 
 in vec4 color;
+in vec2 uv;
+
+uniform sampler2D tex0;
 
 void main()
 {
-	out_color = color;
-	//out_color = vec4(0,0,1,1);
+	out_color = texture2D(tex0, uv);
 }

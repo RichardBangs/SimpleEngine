@@ -18,10 +18,18 @@ namespace Renderer
 
 		virtual void Render();
 
+		void SetShader(unsigned int program) { _program = program; }
+		void SetTexture(unsigned int texture) { _texture = texture;  }
+
 	protected:
+
+		unsigned int _program;
+		unsigned int _texture;
+
 	private:
 
 		unsigned int _vbo;
 		unsigned int _triangleCount;
+
 	};
 }

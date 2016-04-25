@@ -9,6 +9,7 @@
 #include "Renderer\QuadRenderable.h"
 #include "Renderer\VertexFormat.h"
 #include "Renderer\ShaderLoader.h"
+#include "Renderer\Textures\TextureLoader.h"
 
 #include <iostream>
 #include <vector>
@@ -69,13 +70,16 @@ void SetupScene()
 
 	unsigned int simpleShaders = Renderer::ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
 	quadRenderable->SetShader(simpleShaders);
+
+	unsigned int simpleTexture = Renderer::TextureLoader::LoadTexture("Textures\\test.png");
+	quadRenderable->SetTexture(simpleTexture);
 }
 
 void OnUpdate(float dt)
 {
-	pos.x += 0.01f;
+	pos.x += 0.001f;
 	quad->SetPosition(pos);
-	quad->SetSize(glm::vec2(pos.x, 1.0f));
+	quad->SetSize(glm::vec2(1.0f, pos.x));
 }
 
 void OnRender()

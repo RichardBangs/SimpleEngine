@@ -14,10 +14,4 @@ namespace Renderer
 	{
 		RenderableManager::Instance().RemoveRenderable(this);
 	}
-
-	//virtual
-	void BaseRenderable::SetShader(unsigned int program)
-	{
-		_program = program;
-	}
 }
