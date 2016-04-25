@@ -41,7 +41,7 @@ namespace Renderer
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _texture);
 		
-		unsigned int loc = glGetUniformLocation(_program, "tex0");
+		glUniform1i(_program, glGetUniformLocation(_program, "tex0"));
 		
 		glBindVertexBuffer(0, _vbo, 0, sizeof(VertexFormat));
 		glDrawArrays(GL_TRIANGLES, 0, _triangleCount);
