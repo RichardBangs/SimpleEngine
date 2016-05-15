@@ -11,12 +11,11 @@ namespace Renderer
 {
 	QuadRenderable::QuadRenderable()
 	{
-		SetSize(glm::vec2(0.5f, 0.5f));
 	}
 
 	QuadRenderable::QuadRenderable(const char* texturePath)
 	{
-		SetSize(glm::vec2(0.5f, 0.5f));
+		SetSize(glm::vec2(1.0f, 1.0f));
 
 		unsigned int simpleShaders = ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
 		SetShader(simpleShaders);

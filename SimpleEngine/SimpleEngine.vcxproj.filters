@@ -84,6 +84,12 @@
     <ClCompile Include="Game\WorldTileGrass.cpp">
       <Filter>Source Files\Game\Tiles</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\SpriteRenderable.cpp">
+      <Filter>Source Files\Renderer\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Textures\SpriteLoader.cpp">
+      <Filter>Source Files\Renderer\Textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\VertexFormat.h">
@@ -127,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="Game\WorldTileGrass.h">
       <Filter>Source Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\SpriteRenderable.h">
+      <Filter>Source Files\Renderer\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Textures\SpriteLoader.h">
+      <Filter>Source Files\Renderer\Textures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

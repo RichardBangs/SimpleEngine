@@ -47,6 +47,13 @@ namespace Renderer
 
 	void RenderableManager::Render()
 	{
+		//	Use nearest only filtering.
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		//	Loop through and render all renderables :)
 		std::vector<BaseRenderable*>::iterator it;
 		for (it = _renderables.begin(); it < _renderables.end(); ++it)
 		{

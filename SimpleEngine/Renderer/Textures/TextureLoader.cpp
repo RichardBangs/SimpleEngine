@@ -10,7 +10,7 @@
 
 namespace Renderer
 {
-	std::map<const char*, unsigned int> TextureLoader::_textures;
+	std::map<const char*, TextureInfo*> TextureLoader::_textures;
 
 	//static
 	unsigned int TextureLoader::GetOrLoadTexture(const char* filename)
@@ -18,28 +18,36 @@ namespace Renderer
 		if (_textures.count(filename) == 0)
 			_textures[filename] = TextureLoader::LoadTexture(filename);
 		
+		return _textures[filename]->handle;
+	}
+
+	TextureInfo* TextureLoader::GetOrLoadTexture_Info(const char* filename)
+	{
+		GetOrLoadTexture(filename);
+
 		return _textures[filename];
 	}
 
 	//static
-	unsigned int TextureLoader::LoadTexture(const char* filename)
+	TextureInfo* TextureLoader::LoadTexture(const char* filename)
 	{
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		auto info = new TextureInfo();
+
+		glGenTextures(1, &info->handle);
+		glBindTexture(GL_TEXTURE_2D, info->handle);
 
 		std::string texturePath = Path::AbsolutePathRelativeToAssetsDirectory(filename);
 
-		unsigned int width = 128;
-		unsigned int height = 128;
 		std::vector<unsigned char> data;
 
-		lodepng::decode(data, width, height, texturePath);
+		lodepng::decode(data, info->width, info->height, texturePath);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &data[0]);
+		assert(data.size() != 0);
 
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, info->width, info->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &data[0]);
 
-		return texture;
+		//glGenerateMipmap(GL_TEXTURE_2D);
+
+		return info;
 	}
 }

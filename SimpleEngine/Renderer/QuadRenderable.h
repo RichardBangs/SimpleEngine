@@ -18,10 +18,12 @@ namespace Renderer
 
 		virtual void Render();
 
-	private:
+	protected:
 
 		glm::vec3 _position;
 		glm::vec2 _size;
+
+	private:
 
 		int _shaderLocWorld;
 	};

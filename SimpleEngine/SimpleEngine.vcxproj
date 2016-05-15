@@ -137,6 +137,8 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClCompile Include="Renderer\RenderableManager.cpp" />
     <ClCompile Include="Renderer\ShaderLoader.cpp" />
     <ClCompile Include="Renderer\SimpleRenderable.cpp" />
+    <ClCompile Include="Renderer\SpriteRenderable.cpp" />
+    <ClCompile Include="Renderer\Textures\SpriteLoader.cpp" />
     <ClCompile Include="Renderer\Textures\TextureLoader.cpp" />
     <ClCompile Include="Renderer\VertexFormat.cpp" />
   </ItemGroup>
@@ -153,6 +155,8 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClInclude Include="Renderer\RenderableManager.h" />
     <ClInclude Include="Renderer\ShaderLoader.h" />
     <ClInclude Include="Renderer\SimpleRenderable.h" />
+    <ClInclude Include="Renderer\SpriteRenderable.h" />
+    <ClInclude Include="Renderer\Textures\SpriteLoader.h" />
     <ClInclude Include="Renderer\Textures\TextureLoader.h" />
     <ClInclude Include="Renderer\VertexFormat.h" />
   </ItemGroup>
