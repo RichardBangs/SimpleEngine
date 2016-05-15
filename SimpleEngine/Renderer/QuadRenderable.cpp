@@ -1,5 +1,8 @@
 #include "QuadRenderable.h"
 
+#include "Textures\TextureLoader.h"
+#include "ShaderLoader.h"
+
 #include <vector>
 
 #include "glew.h"
@@ -9,6 +12,17 @@ namespace Renderer
 	QuadRenderable::QuadRenderable()
 	{
 		SetSize(glm::vec2(0.5f, 0.5f));
+	}
+
+	QuadRenderable::QuadRenderable(const char* texturePath)
+	{
+		SetSize(glm::vec2(0.5f, 0.5f));
+
+		unsigned int simpleShaders = ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
+		SetShader(simpleShaders);
+
+		unsigned int simpleTexture = TextureLoader::GetOrLoadTexture("Textures\\test.png");
+		SetTexture(simpleTexture);
 	}
 
 	//virtual

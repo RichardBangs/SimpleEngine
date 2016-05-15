@@ -8,6 +8,7 @@ namespace Renderer
 	{
 	public:
 		QuadRenderable();
+		QuadRenderable(const char* texturePath);
 		virtual ~QuadRenderable();
 
 		inline void SetPosition(glm::vec3 position) { _position = position; }

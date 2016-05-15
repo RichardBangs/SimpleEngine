@@ -11,6 +11,8 @@
 #include "Renderer\ShaderLoader.h"
 #include "Renderer\Textures\TextureLoader.h"
 
+#include "Game\GameManager.h"
+
 #include <iostream>
 #include <vector>
 
@@ -19,6 +21,8 @@ extern void OnRender();
 extern void SetupScene();
 extern void OnClose();
 extern void OnTick(int timerId);
+
+Game::GameManager* gameManager;
 
 int main(int argc, char** argv)
 {
@@ -53,33 +57,16 @@ void SetupOpenGLWindow(int argc, char** argv)
 	glutCloseFunc(OnClose);
 	glutTimerFunc(1, OnTick, 0);
 
-	SetupScene();
+	Renderer::RenderableManager::Create();
+
+	gameManager = new Game::GameManager();
 
 	glutMainLoop();
 }
 
-Renderer::QuadRenderable* quad;
-glm::vec3 pos;
-
-void SetupScene()
-{
-	Renderer::RenderableManager::Create();
-
-	auto quadRenderable = new Renderer::QuadRenderable();
-	quad = quadRenderable;
-
-	unsigned int simpleShaders = Renderer::ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
-	quadRenderable->SetShader(simpleShaders);
-
-	unsigned int simpleTexture = Renderer::TextureLoader::LoadTexture("Textures\\test.png");
-	quadRenderable->SetTexture(simpleTexture);
-}
-
 void OnUpdate(float dt)
 {
-	pos.x += 0.001f;
-	quad->SetPosition(pos);
-	quad->SetSize(glm::vec2(1.0f, pos.x));
+	gameManager->OnUpdate( dt );
 }
 
 void OnRender()
@@ -88,6 +75,8 @@ void OnRender()
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
 
 	Renderer::RenderableManager::Instance().Render();
+
+	gameManager->OnRender();
 
 	glutSwapBuffers();
 }
@@ -103,6 +92,8 @@ void OnTick(int timerId)
 void OnClose()
 {
 	glutLeaveMainLoop();
+
+	delete gameManager;
 
 	Renderer::RenderableManager::Destroy();
 	Renderer::ShaderLoader::DestroyAllShaders();

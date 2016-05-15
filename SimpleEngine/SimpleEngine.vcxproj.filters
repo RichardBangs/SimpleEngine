@@ -28,6 +28,15 @@
     <Filter Include="lodepng">
       <UniqueIdentifier>{c02dbe9d-142e-4970-877c-d5905fa68c0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{f869be96-6597-4639-8afb-363b1816070b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects">
+      <UniqueIdentifier>{6938c7cf-3d50-40e6-8e3a-b65b83136d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Tiles">
+      <UniqueIdentifier>{68d0f4dc-8d91-45ea-b0bb-3f6634f834b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -60,6 +69,21 @@
     <ClCompile Include="..\Libs\lodepng\lodepng.cpp">
       <Filter>lodepng</Filter>
     </ClCompile>
+    <ClCompile Include="Game\GameManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\World.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\WorldObject.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\WorldTile.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\WorldTileGrass.cpp">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer\VertexFormat.h">
@@ -88,6 +112,21 @@
     </ClInclude>
     <ClInclude Include="..\Libs\lodepng\lodepng.h">
       <Filter>lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\GameManager.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\World.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\WorldObject.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\WorldTile.h">
+      <Filter>Source Files\Game\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\WorldTileGrass.h">
+      <Filter>Source Files\Game\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

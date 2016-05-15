@@ -10,15 +10,18 @@
 
 namespace Renderer
 {
-	TextureLoader::TextureLoader()
+	std::map<const char*, unsigned int> TextureLoader::_textures;
+
+	//static
+	unsigned int TextureLoader::GetOrLoadTexture(const char* filename)
 	{
-	}
-	
-	//virtual
-	TextureLoader::~TextureLoader()
-	{
+		if (_textures.count(filename) == 0)
+			_textures[filename] = TextureLoader::LoadTexture(filename);
+		
+		return _textures[filename];
 	}
 
+	//static
 	unsigned int TextureLoader::LoadTexture(const char* filename)
 	{
 		unsigned int texture;

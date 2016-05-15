@@ -125,6 +125,11 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Libs\lodepng\lodepng.cpp" />
+    <ClCompile Include="Game\GameManager.cpp" />
+    <ClCompile Include="Game\World.cpp" />
+    <ClCompile Include="Game\WorldObject.cpp" />
+    <ClCompile Include="Game\WorldTile.cpp" />
+    <ClCompile Include="Game\WorldTileGrass.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Renderer\BaseRenderable.cpp" />
@@ -137,6 +142,11 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Libs\lodepng\lodepng.h" />
+    <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\World.h" />
+    <ClInclude Include="Game\WorldObject.h" />
+    <ClInclude Include="Game\WorldTile.h" />
+    <ClInclude Include="Game\WorldTileGrass.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Renderer\BaseRenderable.h" />
     <ClInclude Include="Renderer\QuadRenderable.h" />
