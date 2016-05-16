@@ -7,6 +7,7 @@ namespace Renderer { class QuadRenderable; }
 namespace Game
 {
 	class World;
+	class Player;
 
 	class GameManager
 	{
@@ -20,5 +21,6 @@ namespace Game
 	private:
 
 		World* _world;
+		Player* _player;
 	};
 }

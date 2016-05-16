@@ -5,6 +5,7 @@
 namespace Renderer
 {
 	struct SpriteInfo;
+	struct AtlasInfo;
 	struct TextureInfo;
 
 	class SpriteRenderable : public QuadRenderable
@@ -13,7 +14,7 @@ namespace Renderer
 		SpriteRenderable(const char* spriteID);
 		virtual ~SpriteRenderable();
 
-		void SetSize(glm::vec2 size, SpriteInfo* spriteInfo, TextureInfo* textureInfo);
+		void SetSize(glm::vec2 size, SpriteInfo* spriteInfo, AtlasInfo* atlasInfo, TextureInfo* textureInfo);
 
 	private:
 

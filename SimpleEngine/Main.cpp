@@ -6,17 +6,17 @@
 #include "Path.h"
 
 #include "Renderer\RenderableManager.h"
-#include "Renderer\QuadRenderable.h"
-#include "Renderer\VertexFormat.h"
+#include "Renderer\Camera.h"
 #include "Renderer\ShaderLoader.h"
-#include "Renderer\Textures\TextureLoader.h"
 
+#include "Game\InputManager.h"
 #include "Game\GameManager.h"
 
 #include <iostream>
 #include <vector>
 
 extern void SetupOpenGLWindow(int argc, char** argv);
+extern void OnKeyboardInput(unsigned char key, int x, int y);
 extern void OnRender();
 extern void SetupScene();
 extern void OnClose();
@@ -53,15 +53,22 @@ void SetupOpenGLWindow(int argc, char** argv)
 
 	glEnable(GL_DEPTH_TEST);
 
+	glutKeyboardFunc(OnKeyboardInput);
 	glutDisplayFunc(OnRender);
 	glutCloseFunc(OnClose);
 	glutTimerFunc(1, OnTick, 0);
 
 	Renderer::RenderableManager::Create();
+	Renderer::Camera::Create();
 
 	gameManager = new Game::GameManager();
 
 	glutMainLoop();
+}
+
+void OnKeyboardInput(unsigned char key, int x, int y)
+{
+	Game::InputManager::Instance().OnKeyboardInput(key);
 }
 
 void OnUpdate(float dt)
@@ -96,5 +103,6 @@ void OnClose()
 	delete gameManager;
 
 	Renderer::RenderableManager::Destroy();
+	Renderer::Camera::Destroy();
 	Renderer::ShaderLoader::DestroyAllShaders();
 }

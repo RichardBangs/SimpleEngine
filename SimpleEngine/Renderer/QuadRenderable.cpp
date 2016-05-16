@@ -63,7 +63,7 @@ namespace Renderer
 	//virtual
 	void QuadRenderable::Render()
 	{
-		glUniform4f(_shaderLocWorld, _position.x, _position.y, _position.z, 0.0f);
+		glUniform4f(_shaderLocWorld, _position.x , _position.y, _position.z, 0.0f);
 
 		SimpleRenderable::Render();
 	}

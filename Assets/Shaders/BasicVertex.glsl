@@ -6,11 +6,12 @@ layout(location = 2) in vec2 in_uv;
 out vec4 color;
 out vec2 uv;
 
+uniform vec4 cameraPosition;
 uniform vec4 worldPosition;
 
 void main()
 {
 	color = in_color;
 	uv = in_uv;
-	gl_Position = in_position + worldPosition;
+	gl_Position = in_position + worldPosition + cameraPosition;
 }

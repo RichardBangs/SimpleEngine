@@ -13,6 +13,7 @@ namespace Renderer
 	SpriteRenderable::SpriteRenderable(const char* spriteID)
 	{
 		auto spriteInfo = SpriteLoader::GetSpriteInfo(spriteID);
+		auto atlasInfo = SpriteLoader::GetAtlasInfo(spriteInfo->texturePath);
 
 		unsigned int simpleShaders = ShaderLoader::CreateProgram("Shaders\\BasicVertex.glsl", "Shaders\\BasicFragment.glsl");
 		SetShader(simpleShaders);
@@ -20,7 +21,7 @@ namespace Renderer
 		TextureInfo* textureInfo = TextureLoader::GetOrLoadTexture_Info(spriteInfo->texturePath);
 		SetTexture(textureInfo->handle);
 
-		SetSize(glm::vec2(1.0f, 1.0f), spriteInfo, textureInfo);
+		SetSize(glm::vec2(1.0f, 1.0f), spriteInfo, atlasInfo, textureInfo);
 	}
 
 	//virtual
@@ -28,7 +29,7 @@ namespace Renderer
 	{
 	}
 
-	void SpriteRenderable::SetSize(glm::vec2 size, SpriteInfo* spriteInfo, TextureInfo* textureInfo)
+	void SpriteRenderable::SetSize(glm::vec2 size, SpriteInfo* spriteInfo, AtlasInfo* atlasInfo, TextureInfo* textureInfo)
 	{
 		QuadRenderable::_size = size;
 
@@ -39,11 +40,11 @@ namespace Renderer
 		float halfWidth = size.x / 2.0f;
 		float halfHeight = size.y / 2.0f;
 
-		glm::vec2 UV0 = glm::vec2((1.0f / textureInfo->width) * (spriteInfo->posX * ( spriteInfo->strideX + spriteInfo->bufferX )),
-			(1.0f / textureInfo->height) * (spriteInfo->posY * ( spriteInfo->strideY + spriteInfo->bufferY )) );
+		glm::vec2 UV0 = glm::vec2((1.0f / textureInfo->width) * (spriteInfo->posX * (atlasInfo->strideX + atlasInfo->bufferX )),
+			(1.0f / textureInfo->height) * (spriteInfo->posY * (atlasInfo->strideY + atlasInfo->bufferY )) );
 
-		glm::vec2 UV1 = UV0 + glm::vec2((1.0f / textureInfo->width) * spriteInfo->strideX,
-			(1.0f / textureInfo->height) * spriteInfo->strideY);
+		glm::vec2 UV1 = UV0 + glm::vec2((1.0f / textureInfo->width) * atlasInfo->strideX,
+			(1.0f / textureInfo->height) * atlasInfo->strideY);
 
 		vertices.push_back(Renderer::VertexFormat(glm::vec3(halfWidth, -halfHeight, 0.0f), white, glm::vec2(UV1.x, UV1.y)));
 		vertices.push_back(Renderer::VertexFormat(glm::vec3(-halfWidth, -halfHeight, 0.0f), white, glm::vec2(UV0.x, UV1.y)));

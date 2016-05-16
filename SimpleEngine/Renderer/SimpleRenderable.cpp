@@ -1,5 +1,7 @@
 #include "SimpleRenderable.h"
 
+#include "Camera.h"
+
 #include "glew.h"
 #include "freeglut.h"
 
@@ -37,6 +39,8 @@ namespace Renderer
 		VertexFormat::Bind();
 		
 		glUseProgram(_program);
+
+		Camera::Instance().ApplyShaderConstant(_program);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _texture);

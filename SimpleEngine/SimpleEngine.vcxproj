@@ -126,6 +126,8 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
   <ItemGroup>
     <ClCompile Include="..\Libs\lodepng\lodepng.cpp" />
     <ClCompile Include="Game\GameManager.cpp" />
+    <ClCompile Include="Game\InputManager.cpp" />
+    <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\World.cpp" />
     <ClCompile Include="Game\WorldObject.cpp" />
     <ClCompile Include="Game\WorldTile.cpp" />
@@ -133,6 +135,7 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Renderer\BaseRenderable.cpp" />
+    <ClCompile Include="Renderer\Camera.cpp" />
     <ClCompile Include="Renderer\QuadRenderable.cpp" />
     <ClCompile Include="Renderer\RenderableManager.cpp" />
     <ClCompile Include="Renderer\ShaderLoader.cpp" />
@@ -145,12 +148,15 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
   <ItemGroup>
     <ClInclude Include="..\Libs\lodepng\lodepng.h" />
     <ClInclude Include="Game\GameManager.h" />
+    <ClInclude Include="Game\InputManager.h" />
+    <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\World.h" />
     <ClInclude Include="Game\WorldObject.h" />
     <ClInclude Include="Game\WorldTile.h" />
     <ClInclude Include="Game\WorldTileGrass.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Renderer\BaseRenderable.h" />
+    <ClInclude Include="Renderer\Camera.h" />
     <ClInclude Include="Renderer\QuadRenderable.h" />
     <ClInclude Include="Renderer\RenderableManager.h" />
     <ClInclude Include="Renderer\ShaderLoader.h" />

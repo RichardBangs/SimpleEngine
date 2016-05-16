@@ -3,7 +3,7 @@
 namespace Game
 {
 	WorldTileGrass::WorldTileGrass(int x, int y)
-		: WorldTile( x, y, "City::Red-Top" )
+		: WorldTile( x, y, "City::Grass-Middle" )
 	{
 	}
 	
