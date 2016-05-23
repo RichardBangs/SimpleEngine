@@ -17,6 +17,7 @@
 
 extern void SetupOpenGLWindow(int argc, char** argv);
 extern void OnKeyboardInput(unsigned char key, int x, int y);
+extern void OnMouseInput(int button, int state, int x, int y);
 extern void OnRender();
 extern void SetupScene();
 extern void OnClose();
@@ -33,9 +34,15 @@ int main(int argc, char** argv)
 
 void SetupOpenGLWindow(int argc, char** argv)
 {
+	const int windowWidth = 1600;
+	const int windowHeight = 800;
+
+	const float aspectRatio = (float)windowHeight / windowWidth;
+
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(800, 600);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(windowWidth, windowHeight);
 	glutCreateWindow("Simple Engine");
 
 	glewInit();
@@ -54,12 +61,15 @@ void SetupOpenGLWindow(int argc, char** argv)
 	glEnable(GL_DEPTH_TEST);
 
 	glutKeyboardFunc(OnKeyboardInput);
+	glutMouseFunc(OnMouseInput);
 	glutDisplayFunc(OnRender);
 	glutCloseFunc(OnClose);
 	glutTimerFunc(1, OnTick, 0);
 
 	Renderer::RenderableManager::Create();
 	Renderer::Camera::Create();
+
+	Renderer::Camera::Instance().Scale = glm::vec3(aspectRatio, 1.0f, 1.0f);
 
 	gameManager = new Game::GameManager();
 
@@ -69,6 +79,11 @@ void SetupOpenGLWindow(int argc, char** argv)
 void OnKeyboardInput(unsigned char key, int x, int y)
 {
 	Game::InputManager::Instance().OnKeyboardInput(key);
+}
+
+void OnMouseInput(int button, int state, int x, int y)
+{
+	Game::InputManager::Instance().OnMouseInput(button, state, x, y);
 }
 
 void OnUpdate(float dt)

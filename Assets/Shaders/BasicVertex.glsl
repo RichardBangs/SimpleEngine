@@ -7,11 +7,12 @@ out vec4 color;
 out vec2 uv;
 
 uniform vec4 cameraPosition;
+uniform vec4 cameraScale;
 uniform vec4 worldPosition;
 
 void main()
 {
 	color = in_color;
 	uv = in_uv;
-	gl_Position = in_position + worldPosition + cameraPosition;
+	gl_Position = ( in_position + worldPosition + cameraPosition ) * cameraScale;
 }

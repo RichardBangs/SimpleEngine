@@ -1,25 +1,27 @@
 #pragma once
 
 #include <functional>
+#include "Utils/Singleton.h"
 
 namespace Game
 {
-	class InputManager
+	class InputManager : public Utils::Singleton<InputManager>
 	{
 	public:
-		inline static InputManager& Instance() { return *_instance; }
-		inline static void Create() { new InputManager; }
-		inline static void Destroy() { delete _instance; }
-
 		InputManager();
 		~InputManager();
 
 		void RegisterForOnKeyboardInput(std::function<void(char)> func);
 		void OnKeyboardInput(char key);
-	
+
+		void RegisterForOnMouseInput(std::function<void(int,int,int,int)> func);
+		void OnMouseInput(int button, int state, int x, int y);
+
 	private:
 		static InputManager* _instance;
 
 		std::function<void(char)> _onKeyboardInput;
+
+		std::function<void(int,int,int,int)> _onMouseInput;
 	};
 }

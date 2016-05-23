@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Game\Tiles">
       <UniqueIdentifier>{68d0f4dc-8d91-45ea-b0bb-3f6634f834b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{91bc76c3-e8ab-4441-8575-337f75250645}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -157,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="Game\InputManager.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Singleton.h">
+      <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Singleton.inline.h">
+      <Filter>Source Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

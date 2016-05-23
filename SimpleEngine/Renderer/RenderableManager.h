@@ -2,17 +2,15 @@
 
 #include <vector>
 
+#include "Utils/Singleton.h"
+
 namespace Renderer
 {
 	class BaseRenderable;
 
-	class RenderableManager
+	class RenderableManager : public Utils::Singleton<RenderableManager>
 	{
 	public:
-		inline static RenderableManager& Instance() { return *_instance; }
-		inline static void Create() { new RenderableManager; }
-		inline static void Destroy() { delete _instance; }
-
 		RenderableManager();
 		~RenderableManager();
 

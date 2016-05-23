@@ -22,4 +22,14 @@ namespace Game
 	{
 		_onKeyboardInput(key);
 	}
+
+	void InputManager::RegisterForOnMouseInput(std::function<void(int, int, int, int)> func)
+	{
+		_onMouseInput = func;
+	}
+
+	void InputManager::OnMouseInput(int button, int state, int x, int y)
+	{
+		_onMouseInput(button, state, x, y);
+	}
 }
