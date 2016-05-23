@@ -14,5 +14,5 @@ void main()
 {
 	color = in_color;
 	uv = in_uv;
-	gl_Position = ( in_position + worldPosition + cameraPosition ) * cameraScale;
+	gl_Position = ( in_position + worldPosition - cameraPosition ) * cameraScale;
 }

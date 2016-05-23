@@ -8,6 +8,7 @@
 #include "Renderer\RenderableManager.h"
 #include "Renderer\Camera.h"
 #include "Renderer\ShaderLoader.h"
+#include "Renderer\WindowManager.h"
 
 #include "Game\InputManager.h"
 #include "Game\GameManager.h"
@@ -41,9 +42,9 @@ void SetupOpenGLWindow(int argc, char** argv)
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(windowWidth, windowHeight);
-	glutCreateWindow("Simple Engine");
+
+	Renderer::WindowManager::Create();
+	Renderer::WindowManager::Instance().InitialiseWindow(glm::vec2(100, 100), glm::vec2(windowWidth, windowHeight));
 
 	glewInit();
 	if (glewIsSupported("GL_VERSION_4_5"))

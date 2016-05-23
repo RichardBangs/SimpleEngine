@@ -4,6 +4,8 @@
 
 namespace Game
 {
+	const float World::WorldScale = 2.0f;
+
 	World::World()
 	{
 		const int worldSize = 1;
