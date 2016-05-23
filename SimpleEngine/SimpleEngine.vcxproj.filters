@@ -40,6 +40,18 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{91bc76c3-e8ab-4441-8575-337f75250645}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Simulation">
+      <UniqueIdentifier>{f6690625-6a3e-4f73-a150-b32688342eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Simulation\State">
+      <UniqueIdentifier>{2757b6fa-a751-4b7a-824f-ff6f9cdf531c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Simulation\Logic">
+      <UniqueIdentifier>{627c3a91-7c9b-45fb-8bee-2e31026576ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Simulation\Events">
+      <UniqueIdentifier>{fcd4dcf8-758d-40fd-a4a5-b451c713f69b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -104,6 +116,33 @@
     </ClCompile>
     <ClCompile Include="Renderer\WindowManager.cpp">
       <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\SimulationManager.cpp">
+      <Filter>Source Files\Simulation</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\WorldState.cpp">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\PlayerState.cpp">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\GameState.cpp">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Logic\PlayerLogic.cpp">
+      <Filter>Source Files\Simulation\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Logic\LogicBase.cpp">
+      <Filter>Source Files\Simulation\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Events\EventBase.cpp">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Events\PlayerMoveEvent.cpp">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Events\PlayerCreatedEvent.cpp">
+      <Filter>Source Files\Simulation\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +211,33 @@
     </ClInclude>
     <ClInclude Include="Renderer\WindowManager.h">
       <Filter>Source Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\SimulationManager.h">
+      <Filter>Source Files\Simulation</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\WorldState.h">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\PlayerState.h">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\GameState.h">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Logic\PlayerLogic.h">
+      <Filter>Source Files\Simulation\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Logic\LogicBase.h">
+      <Filter>Source Files\Simulation\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Events\EventBase.h">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Events\PlayerMoveEvent.h">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Events\PlayerCreatedEvent.h">
+      <Filter>Source Files\Simulation\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

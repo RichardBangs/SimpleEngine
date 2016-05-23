@@ -3,18 +3,20 @@
 #include "glm.hpp"
 
 namespace Renderer { class SpriteRenderable; }
+namespace Simulation { class PlayerState; }
 
 namespace Game
 {
 	class Player
 	{
 	public:
-		Player();
+		Player(int id, bool isLocalPlayer);
 		~Player();
 
-		void Update(float dt);
-
 		void UpdateAnimation(float dt);
+
+		void UpdateView(Simulation::PlayerState* playerState, float dt);
+		void UpdateController();
 	
 	private:
 
@@ -25,5 +27,8 @@ namespace Game
 
 		glm::vec3 _position;
 		glm::vec3 _targetPosition;
+
+		int _id;
+		bool _isLocalPlayer;
 	};
 }

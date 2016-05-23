@@ -20,7 +20,8 @@ namespace Game
 
 	void InputManager::OnKeyboardInput(char key)
 	{
-		_onKeyboardInput(key);
+		if(_onKeyboardInput)
+			_onKeyboardInput(key);
 	}
 
 	void InputManager::RegisterForOnMouseInput(std::function<void(int, int, int, int)> func)
@@ -30,6 +31,7 @@ namespace Game
 
 	void InputManager::OnMouseInput(int button, int state, int x, int y)
 	{
-		_onMouseInput(button, state, x, y);
+		if(_onMouseInput)
+			_onMouseInput(button, state, x, y);
 	}
 }

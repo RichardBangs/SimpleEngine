@@ -10,6 +10,11 @@
 #include "Renderer\Textures\TextureLoader.h"
 #include "Renderer\Textures\SpriteLoader.h"
 
+#include "Simulation\SimulationManager.h"
+#include "Simulation\GameState.h"
+#include "Simulation\PlayerState.h"
+#include "Simulation\Events\PlayerCreatedEvent.h"
+
 #include "InputManager.h"
 
 #include "World.h"
@@ -43,7 +48,11 @@ namespace Game
 
 		_world = new World();
 
-		_player = new Player();
+		_idOfLocalPlayer = 0;
+
+		Simulation::SimulationManager::Create();
+		Simulation::SimulationManager::Instance().AddEvent(new Simulation::PlayerCreatedEvent(0, _idOfLocalPlayer));
+		Simulation::SimulationManager::Instance().AddEvent(new Simulation::PlayerCreatedEvent(100, 74));
 	}
 
 	GameManager::~GameManager()
@@ -52,7 +61,17 @@ namespace Game
 
 	void GameManager::OnUpdate(float dt)
 	{
-		_player->Update(dt);
+		Simulation::GameState* gameState = Simulation::SimulationManager::Instance().Tick();
+		
+		for (auto it = gameState->_players.begin(); it < gameState->_players.end(); ++it)
+		{
+			Simulation::PlayerState* playerState = *it;
+
+			if (_players.count(playerState->_id) == 0)
+				_players[playerState->_id] = new Player(playerState->_id, playerState->_id == _idOfLocalPlayer);
+
+			_players[playerState->_id]->UpdateView(playerState, dt);
+		}
 	}
 
 	void GameManager::OnRender()

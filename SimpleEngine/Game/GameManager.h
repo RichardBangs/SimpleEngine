@@ -2,6 +2,8 @@
 
 #include "glm.hpp"
 
+#include <map>
+
 namespace Renderer { class QuadRenderable; }
 
 namespace Game
@@ -21,6 +23,8 @@ namespace Game
 	private:
 
 		World* _world;
-		Player* _player;
+		std::map<int, Player*> _players;
+
+		int _idOfLocalPlayer;
 	};
 }

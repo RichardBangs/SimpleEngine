@@ -8,31 +8,45 @@
 
 #include "Renderer\SpriteRenderable.h"
 
+#include "Simulation\SimulationManager.h"
+#include "Simulation\Events\PlayerMoveEvent.h"
+#include "Simulation\PlayerState.h"
+
 #include <iostream>
 
 namespace Game
 {
-	Player::Player()
+	Player::Player(int id, bool isLocalPlayer)
 	{
-		InputManager::Instance().RegisterForOnKeyboardInput(std::bind(&Player::OnKeyboardInput, this, std::placeholders::_1));
-		InputManager::Instance().RegisterForOnMouseInput(std::bind(&Player::OnMouseInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+		_isLocalPlayer = isLocalPlayer;
+
+		if (isLocalPlayer)
+		{
+			InputManager::Instance().RegisterForOnKeyboardInput(std::bind(&Player::OnKeyboardInput, this, std::placeholders::_1));
+			InputManager::Instance().RegisterForOnMouseInput(std::bind(&Player::OnMouseInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+		}
 
 		_renderable = new Renderer::SpriteRenderable("Characters::Hero0", glm::vec2(0.1f, 0.1f));
+
+		_id = id;
 	}
 
 	Player::~Player()
 	{
 	}
 
-	void Player::Update(float dt)
+	void Player::UpdateView(Simulation::PlayerState* playerState, float dt)
 	{
-		UpdateAnimation(dt);
+		this->_targetPosition = playerState->_Position;	//TODO: CANT DO THIS REALLY! Server needs to control tick by tick position...
 
-		Renderer::Camera::Instance().Position = _position;
+		UpdateAnimation(dt);
+		
+		if(_isLocalPlayer)	//	TODO: This shouldn't be here.
+			Renderer::Camera::Instance().Position = _position;
 
 		_renderable->SetPosition(_position + glm::vec3(0.0f, 0.0f, -1.0f));
 	}
-
+	
 	void Player::UpdateAnimation(float dt)
 	{
 		const float animationSpeed = 2.0f;	//	world units per second.
@@ -72,8 +86,11 @@ namespace Game
 
 		glm::vec2 deltaPositionInScreenSpace = mouseClickInScreenSpace - playerPositionInScreenSpace;
 
-		_targetPosition = _position + glm::vec3(deltaPositionInScreenSpace.x * World::WorldScale / Renderer::Camera::Instance().Scale.x,
+		glm::vec3 targetPosition = _position + glm::vec3(deltaPositionInScreenSpace.x * World::WorldScale / Renderer::Camera::Instance().Scale.x,
 			-deltaPositionInScreenSpace.y * World::WorldScale / Renderer::Camera::Instance().Scale.y,
 			0.0f);
+
+		auto myMoveEvent = new Simulation::PlayerMoveEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, targetPosition);
+		Simulation::SimulationManager::Instance().AddEvent(myMoveEvent);
 	}
 }
