@@ -20,9 +20,28 @@ namespace Game
 	{
 	}
 
-	void Player::Update()
+	void Player::Update(float dt)
 	{
+		UpdateAnimation(dt);
+
 		Renderer::Camera::Instance().Position = _position;
+	}
+
+	void Player::UpdateAnimation(float dt)
+	{
+		const float animationSpeed = 2.0f;	//	world units per second.
+
+		float maxDistanceThisUpdate = animationSpeed * dt;
+
+		glm::vec3 deltaPosition = _targetPosition - _position;
+		
+		if (glm::length(deltaPosition) <= maxDistanceThisUpdate)
+		{
+			_position = _targetPosition;
+			return;
+		}
+
+		_position += glm::normalize(deltaPosition) * maxDistanceThisUpdate;
 	}
 
 	void Player::OnKeyboardInput(char key)
@@ -65,10 +84,8 @@ namespace Game
 
 		glm::vec2 deltaPositionInScreenSpace = mouseClickInScreenSpace - playerPositionInScreenSpace;
 
-		_position += glm::vec3(deltaPositionInScreenSpace.x * World::WorldScale / Renderer::Camera::Instance().Scale.x,
+		_targetPosition = _position + glm::vec3(deltaPositionInScreenSpace.x * World::WorldScale / Renderer::Camera::Instance().Scale.x,
 			-deltaPositionInScreenSpace.y * World::WorldScale / Renderer::Camera::Instance().Scale.y,
 			0.0f);
-
-		std::cout << _position.x << "," << _position.y << std::endl;
 	}
 }

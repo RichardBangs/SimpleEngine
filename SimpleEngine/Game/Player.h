@@ -10,7 +10,9 @@ namespace Game
 		Player();
 		~Player();
 
-		void Update();
+		void Update(float dt);
+
+		void UpdateAnimation(float dt);
 	
 	private:
 
@@ -18,5 +20,7 @@ namespace Game
 		void OnMouseInput(int button, int state, int x, int y);
 
 		glm::vec3 _position;
+
+		glm::vec3 _targetPosition;
 	};
 }

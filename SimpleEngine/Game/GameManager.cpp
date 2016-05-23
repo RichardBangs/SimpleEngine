@@ -45,7 +45,7 @@ namespace Game
 
 	void GameManager::OnUpdate(float dt)
 	{
-		_player->Update();
+		_player->Update(dt);
 	}
 
 	void GameManager::OnRender()
