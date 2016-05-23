@@ -21,14 +21,19 @@ namespace Renderer
 		void SetShader(unsigned int program) { _program = program; }
 		void SetTexture(unsigned int texture) { _texture = texture;  }
 
+		inline void SetPosition(glm::vec3 position) { _position = position; }
+
 	protected:
 
 		unsigned int _program;
 		unsigned int _texture;
 
+		glm::vec3 _position;
+
 	private:
 
 		unsigned int _vbo;
+		unsigned int _vao;
 		unsigned int _triangleCount;
 
 	};

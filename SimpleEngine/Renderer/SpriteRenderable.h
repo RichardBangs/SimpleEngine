@@ -11,7 +11,7 @@ namespace Renderer
 	class SpriteRenderable : public QuadRenderable
 	{
 	public:
-		SpriteRenderable(const char* spriteID);
+		SpriteRenderable(const char* spriteID, glm::vec2 size);
 		virtual ~SpriteRenderable();
 
 		void SetSize(glm::vec2 size, SpriteInfo* spriteInfo, AtlasInfo* atlasInfo, TextureInfo* textureInfo);

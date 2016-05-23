@@ -2,6 +2,8 @@
 
 #include "glm.hpp"
 
+namespace Renderer { class SpriteRenderable; }
+
 namespace Game
 {
 	class Player
@@ -19,8 +21,9 @@ namespace Game
 		void OnKeyboardInput(char key);
 		void OnMouseInput(int button, int state, int x, int y);
 
-		glm::vec3 _position;
+		Renderer::SpriteRenderable* _renderable;
 
+		glm::vec3 _position;
 		glm::vec3 _targetPosition;
 	};
 }

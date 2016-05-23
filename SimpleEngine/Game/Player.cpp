@@ -6,6 +6,8 @@
 #include "Renderer\Camera.h"
 #include "Renderer\WindowManager.h"
 
+#include "Renderer\SpriteRenderable.h"
+
 #include <iostream>
 
 namespace Game
@@ -14,6 +16,8 @@ namespace Game
 	{
 		InputManager::Instance().RegisterForOnKeyboardInput(std::bind(&Player::OnKeyboardInput, this, std::placeholders::_1));
 		InputManager::Instance().RegisterForOnMouseInput(std::bind(&Player::OnMouseInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+
+		_renderable = new Renderer::SpriteRenderable("Characters::Hero0", glm::vec2(0.1f, 0.1f));
 	}
 
 	Player::~Player()
@@ -25,6 +29,8 @@ namespace Game
 		UpdateAnimation(dt);
 
 		Renderer::Camera::Instance().Position = _position;
+
+		_renderable->SetPosition(_position + glm::vec3(0.0f, 0.0f, -1.0f));
 	}
 
 	void Player::UpdateAnimation(float dt)
@@ -46,24 +52,6 @@ namespace Game
 
 	void Player::OnKeyboardInput(char key)
 	{
-		switch (key)
-		{
-		case 'w':
-			_position.y += 0.1f;
-			break;
-
-		case 'a':
-			_position.x -= 0.1f;
-			break;
-
-		case 's':
-			_position.y -= 0.1f;
-			break;
-
-		case 'd':
-			_position.x += 0.1f;
-			break;
-		}
 	}
 
 	void Player::OnMouseInput(int button, int state, int x, int y)

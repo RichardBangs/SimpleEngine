@@ -8,7 +8,7 @@ namespace Game
 
 	World::World()
 	{
-		const int worldSize = 1;
+		const int worldSize = 8;
 
 		for (int x = 0; x < worldSize; x++)
 		{

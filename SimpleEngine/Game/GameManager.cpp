@@ -34,6 +34,13 @@ namespace Game
 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 1, 27, "City::Grass-Bottom");
 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 2, 27, "City::Grass-BottomRight");
 
+
+		const char* charactersAtlasPath = "textures\\CharactersSpriteAtlas.png";
+		Renderer::SpriteLoader::RegisterAtlas(charactersAtlasPath, 16, 16, 1, 1);
+		
+		Renderer::SpriteLoader::RegisterSprite(charactersAtlasPath, 0, 17, "Characters::Hero0");
+
+
 		_world = new World();
 
 		_player = new Player();

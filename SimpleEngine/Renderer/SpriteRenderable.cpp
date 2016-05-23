@@ -10,7 +10,7 @@
 
 namespace Renderer
 {
-	SpriteRenderable::SpriteRenderable(const char* spriteID)
+	SpriteRenderable::SpriteRenderable(const char* spriteID, glm::vec2 size)
 	{
 		auto spriteInfo = SpriteLoader::GetSpriteInfo(spriteID);
 		auto atlasInfo = SpriteLoader::GetAtlasInfo(spriteInfo->texturePath);
@@ -21,7 +21,7 @@ namespace Renderer
 		TextureInfo* textureInfo = TextureLoader::GetOrLoadTexture_Info(spriteInfo->texturePath);
 		SetTexture(textureInfo->handle);
 
-		SetSize(glm::vec2(1.0f, 1.0f), spriteInfo, atlasInfo, textureInfo);
+		SetSize(size, spriteInfo, atlasInfo, textureInfo);
 	}
 
 	//virtual

@@ -1,0 +1,344 @@
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   Assets/Textures/CharactersSpriteAtlas.png
+	modified:   SimpleEngine/Game/GameManager.cpp
+	modified:   SimpleEngine/Game/Player.cpp
+	modified:   SimpleEngine/Game/Player.h
+	modified:   SimpleEngine/Game/World.cpp
+	modified:   SimpleEngine/Game/WorldTile.cpp
+	modified:   SimpleEngine/Renderer/QuadRenderable.cpp
+	modified:   SimpleEngine/Renderer/QuadRenderable.h
+	modified:   SimpleEngine/Renderer/RenderableManager.cpp
+	modified:   SimpleEngine/Renderer/SimpleRenderable.cpp
+	modified:   SimpleEngine/Renderer/SimpleRenderable.h
+	modified:   SimpleEngine/Renderer/SpriteRenderable.cpp
+	modified:   SimpleEngine/Renderer/SpriteRenderable.h
+	modified:   SimpleEngine/Renderer/Textures/TextureLoader.cpp
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	diff.txt
+
+diff --git a/Assets/Textures/CharactersSpriteAtlas.png b/Assets/Textures/CharactersSpriteAtlas.png
+new file mode 100644
+index 0000000..ebfa4d9
+Binary files /dev/null and b/Assets/Textures/CharactersSpriteAtlas.png differ
+diff --git a/SimpleEngine/Game/GameManager.cpp b/SimpleEngine/Game/GameManager.cpp
+index a8a4dbb..60693e1 100644
+--- a/SimpleEngine/Game/GameManager.cpp
++++ b/SimpleEngine/Game/GameManager.cpp
+@@ -34,6 +34,13 @@ namespace Game
+ 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 1, 27, "City::Grass-Bottom");
+ 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 2, 27, "City::Grass-BottomRight");
+ 
++
++		const char* charactersAtlasPath = "textures\\CharactersSpriteAtlas.png";
++		Renderer::SpriteLoader::RegisterAtlas(charactersAtlasPath, 16, 16, 1, 1);
++		
++		Renderer::SpriteLoader::RegisterSprite(charactersAtlasPath, 0, 17, "Characters::Hero0");
++
++
+ 		_world = new World();
+ 
+ 		_player = new Player();
+diff --git a/SimpleEngine/Game/Player.cpp b/SimpleEngine/Game/Player.cpp
+index 474f975..838297a 100644
+--- a/SimpleEngine/Game/Player.cpp
++++ b/SimpleEngine/Game/Player.cpp
+@@ -6,6 +6,8 @@
+ #include "Renderer\Camera.h"
+ #include "Renderer\WindowManager.h"
+ 
++#include "Renderer\SpriteRenderable.h"
++
+ #include <iostream>
+ 
+ namespace Game
+@@ -14,6 +16,8 @@ namespace Game
+ 	{
+ 		InputManager::Instance().RegisterForOnKeyboardInput(std::bind(&Player::OnKeyboardInput, this, std::placeholders::_1));
+ 		InputManager::Instance().RegisterForOnMouseInput(std::bind(&Player::OnMouseInput, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
++
++		_renderable = new Renderer::SpriteRenderable("Characters::Hero0", glm::vec2(0.1f, 0.1f));
+ 	}
+ 
+ 	Player::~Player()
+@@ -25,6 +29,8 @@ namespace Game
+ 		UpdateAnimation(dt);
+ 
+ 		Renderer::Camera::Instance().Position = _position;
++
++		_renderable->SetPosition(_position + glm::vec3(0.0f, 0.0f, -1.0f));
+ 	}
+ 
+ 	void Player::UpdateAnimation(float dt)
+@@ -46,24 +52,6 @@ namespace Game
+ 
+ 	void Player::OnKeyboardInput(char key)
+ 	{
+-		switch (key)
+-		{
+-		case 'w':
+-			_position.y += 0.1f;
+-			break;
+-
+-		case 'a':
+-			_position.x -= 0.1f;
+-			break;
+-
+-		case 's':
+-			_position.y -= 0.1f;
+-			break;
+-
+-		case 'd':
+-			_position.x += 0.1f;
+-			break;
+-		}
+ 	}
+ 
+ 	void Player::OnMouseInput(int button, int state, int x, int y)
+diff --git a/SimpleEngine/Game/Player.h b/SimpleEngine/Game/Player.h
+index cf4c106..a1abb59 100644
+--- a/SimpleEngine/Game/Player.h
++++ b/SimpleEngine/Game/Player.h
+@@ -2,6 +2,8 @@
+ 
+ #include "glm.hpp"
+ 
++namespace Renderer { class SpriteRenderable; }
++
+ namespace Game
+ {
+ 	class Player
+@@ -19,8 +21,9 @@ namespace Game
+ 		void OnKeyboardInput(char key);
+ 		void OnMouseInput(int button, int state, int x, int y);
+ 
+-		glm::vec3 _position;
++		Renderer::SpriteRenderable* _renderable;
+ 
++		glm::vec3 _position;
+ 		glm::vec3 _targetPosition;
+ 	};
+ }
+\ No newline at end of file
+diff --git a/SimpleEngine/Game/World.cpp b/SimpleEngine/Game/World.cpp
+index 60ebe79..6f0738b 100644
+--- a/SimpleEngine/Game/World.cpp
++++ b/SimpleEngine/Game/World.cpp
+@@ -8,7 +8,7 @@ namespace Game
+ 
+ 	World::World()
+ 	{
+-		const int worldSize = 1;
++		const int worldSize = 8;
+ 
+ 		for (int x = 0; x < worldSize; x++)
+ 		{
+diff --git a/SimpleEngine/Game/WorldTile.cpp b/SimpleEngine/Game/WorldTile.cpp
+index 9d0f72b..f341f12 100644
+--- a/SimpleEngine/Game/WorldTile.cpp
++++ b/SimpleEngine/Game/WorldTile.cpp
+@@ -9,7 +9,7 @@ namespace Game
+ 		this->x = x;
+ 		this->y = y;
+ 
+-		_renderable = new Renderer::SpriteRenderable(spriteID);
++		_renderable = new Renderer::SpriteRenderable(spriteID, glm::vec2(1.0f, 1.0f));
+ 
+ 		_renderable->SetPosition(glm::vec3(x, y, 0.0f));
+ 	}
+diff --git a/SimpleEngine/Renderer/QuadRenderable.cpp b/SimpleEngine/Renderer/QuadRenderable.cpp
+index e2eefc0..fe1845e 100644
+--- a/SimpleEngine/Renderer/QuadRenderable.cpp
++++ b/SimpleEngine/Renderer/QuadRenderable.cpp
+@@ -51,20 +51,4 @@ namespace Renderer
+ 
+ 		CreateFromList(vertices);
+ 	}
+-
+-	//virtual
+-	void QuadRenderable::SetShader(unsigned int program)
+-	{
+-		SimpleRenderable::SetShader(program);
+-
+-		_shaderLocWorld = glGetUniformLocation(_program, "worldPosition");
+-	}
+-
+-	//virtual
+-	void QuadRenderable::Render()
+-	{
+-		glUniform4f(_shaderLocWorld, _position.x , _position.y, _position.z, 0.0f);
+-
+-		SimpleRenderable::Render();
+-	}
+ }
+\ No newline at end of file
+diff --git a/SimpleEngine/Renderer/QuadRenderable.h b/SimpleEngine/Renderer/QuadRenderable.h
+index 05d23d5..02f1f63 100644
+--- a/SimpleEngine/Renderer/QuadRenderable.h
++++ b/SimpleEngine/Renderer/QuadRenderable.h
+@@ -11,16 +11,10 @@ namespace Renderer
+ 		QuadRenderable(const char* texturePath);
+ 		virtual ~QuadRenderable();
+ 
+-		inline void SetPosition(glm::vec3 position) { _position = position; }
+ 		void SetSize(glm::vec2 size);
+ 
+-		virtual void SetShader(unsigned int program);
+-
+-		virtual void Render();
+-
+ 	protected:
+ 
+-		glm::vec3 _position;
+ 		glm::vec2 _size;
+ 
+ 	private:
+diff --git a/SimpleEngine/Renderer/RenderableManager.cpp b/SimpleEngine/Renderer/RenderableManager.cpp
+index cc266a6..cd94316 100644
+--- a/SimpleEngine/Renderer/RenderableManager.cpp
++++ b/SimpleEngine/Renderer/RenderableManager.cpp
+@@ -47,12 +47,6 @@ namespace Renderer
+ 
+ 	void RenderableManager::Render()
+ 	{
+-		//	Use nearest only filtering.
+-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
+-
+-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+-
+ 		//	Loop through and render all renderables :)
+ 		std::vector<BaseRenderable*>::iterator it;
+ 		for (it = _renderables.begin(); it < _renderables.end(); ++it)
+diff --git a/SimpleEngine/Renderer/SimpleRenderable.cpp b/SimpleEngine/Renderer/SimpleRenderable.cpp
+index 195a7ea..390807b 100644
+--- a/SimpleEngine/Renderer/SimpleRenderable.cpp
++++ b/SimpleEngine/Renderer/SimpleRenderable.cpp
+@@ -20,6 +20,9 @@ namespace Renderer
+ 
+ 	void SimpleRenderable::CreateFromList(std::vector<VertexFormat> vertices)
+ 	{
++		glGenVertexArrays(1, &_vao);
++		glBindVertexArray(_vao);
++
+ 		glGenBuffers(1, &_vbo);
+ 
+ 		UpdateFromList(vertices);
+@@ -31,23 +34,31 @@ namespace Renderer
+ 
+ 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+ 		glBufferData(GL_ARRAY_BUFFER, sizeof(VertexFormat) * _triangleCount, &vertices[0], GL_STATIC_DRAW);
+-	}
+ 
++		glEnableVertexArrayAttrib(_vao, 0);
++		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(VertexFormat), 0);
++	}
++	
+ 	//virtual
+ 	void SimpleRenderable::Render()
+ 	{
+ 		VertexFormat::Bind();
+-		
++
+ 		glUseProgram(_program);
+ 
++		glUniform4f(glGetUniformLocation(_program, "worldPosition"), _position.x, _position.y, _position.z, 0.0f);
++
+ 		Camera::Instance().ApplyShaderConstant(_program);
+ 
++		//	Use nearest only filtering.
++		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
++		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
++
+ 		glActiveTexture(GL_TEXTURE0);
+ 		glBindTexture(GL_TEXTURE_2D, _texture);
+-		
+-		glUniform1i(_program, glGetUniformLocation(_program, "tex0"));
+-		
+-		glBindVertexBuffer(0, _vbo, 0, sizeof(VertexFormat));
++				
++		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
++		glBindVertexArray(_vao);
+ 		glDrawArrays(GL_TRIANGLES, 0, _triangleCount);
+ 	}
+ }
+\ No newline at end of file
+diff --git a/SimpleEngine/Renderer/SimpleRenderable.h b/SimpleEngine/Renderer/SimpleRenderable.h
+index 60b8142..55d0152 100644
+--- a/SimpleEngine/Renderer/SimpleRenderable.h
++++ b/SimpleEngine/Renderer/SimpleRenderable.h
+@@ -21,14 +21,19 @@ namespace Renderer
+ 		void SetShader(unsigned int program) { _program = program; }
+ 		void SetTexture(unsigned int texture) { _texture = texture;  }
+ 
++		inline void SetPosition(glm::vec3 position) { _position = position; }
++
+ 	protected:
+ 
+ 		unsigned int _program;
+ 		unsigned int _texture;
+ 
++		glm::vec3 _position;
++
+ 	private:
+ 
+ 		unsigned int _vbo;
++		unsigned int _vao;
+ 		unsigned int _triangleCount;
+ 
+ 	};
+diff --git a/SimpleEngine/Renderer/SpriteRenderable.cpp b/SimpleEngine/Renderer/SpriteRenderable.cpp
+index fd4ef17..ff83854 100644
+--- a/SimpleEngine/Renderer/SpriteRenderable.cpp
++++ b/SimpleEngine/Renderer/SpriteRenderable.cpp
+@@ -10,7 +10,7 @@
+ 
+ namespace Renderer
+ {
+-	SpriteRenderable::SpriteRenderable(const char* spriteID)
++	SpriteRenderable::SpriteRenderable(const char* spriteID, glm::vec2 size)
+ 	{
+ 		auto spriteInfo = SpriteLoader::GetSpriteInfo(spriteID);
+ 		auto atlasInfo = SpriteLoader::GetAtlasInfo(spriteInfo->texturePath);
+@@ -21,7 +21,7 @@ namespace Renderer
+ 		TextureInfo* textureInfo = TextureLoader::GetOrLoadTexture_Info(spriteInfo->texturePath);
+ 		SetTexture(textureInfo->handle);
+ 
+-		SetSize(glm::vec2(1.0f, 1.0f), spriteInfo, atlasInfo, textureInfo);
++		SetSize(size, spriteInfo, atlasInfo, textureInfo);
+ 	}
+ 
+ 	//virtual
+diff --git a/SimpleEngine/Renderer/SpriteRenderable.h b/SimpleEngine/Renderer/SpriteRenderable.h
+index 1aa6c0c..37b118d 100644
+--- a/SimpleEngine/Renderer/SpriteRenderable.h
++++ b/SimpleEngine/Renderer/SpriteRenderable.h
+@@ -11,7 +11,7 @@ namespace Renderer
+ 	class SpriteRenderable : public QuadRenderable
+ 	{
+ 	public:
+-		SpriteRenderable(const char* spriteID);
++		SpriteRenderable(const char* spriteID, glm::vec2 size);
+ 		virtual ~SpriteRenderable();
+ 
+ 		void SetSize(glm::vec2 size, SpriteInfo* spriteInfo, AtlasInfo* atlasInfo, TextureInfo* textureInfo);
+diff --git a/SimpleEngine/Renderer/Textures/TextureLoader.cpp b/SimpleEngine/Renderer/Textures/TextureLoader.cpp
+index 1895f48..819435c 100644
+--- a/SimpleEngine/Renderer/Textures/TextureLoader.cpp
++++ b/SimpleEngine/Renderer/Textures/TextureLoader.cpp
+@@ -48,6 +48,8 @@ namespace Renderer
+ 
+ 		//glGenerateMipmap(GL_TEXTURE_2D);
+ 
++		glBindTexture(GL_TEXTURE_2D, 0);
++
+ 		return info;
+ 	}
+ }
+\ No newline at end of file

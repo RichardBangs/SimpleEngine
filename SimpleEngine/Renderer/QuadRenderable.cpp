@@ -51,20 +51,4 @@ namespace Renderer
 
 		CreateFromList(vertices);
 	}
-
-	//virtual
-	void QuadRenderable::SetShader(unsigned int program)
-	{
-		SimpleRenderable::SetShader(program);
-
-		_shaderLocWorld = glGetUniformLocation(_program, "worldPosition");
-	}
-
-	//virtual
-	void QuadRenderable::Render()
-	{
-		glUniform4f(_shaderLocWorld, _position.x , _position.y, _position.z, 0.0f);
-
-		SimpleRenderable::Render();
-	}
 }
