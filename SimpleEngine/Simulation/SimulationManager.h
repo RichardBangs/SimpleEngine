@@ -9,6 +9,7 @@ namespace Simulation
 	class EventBase;	//	Each user input that changes some state in our simulation comes through from an Event.
 	class GameState;	//	Single Frame of State.
 	class PlayerLogic;
+	class WorldLogic;
 
 	class SimulationManager : public Utils::Singleton<SimulationManager>
 	{
@@ -28,6 +29,7 @@ namespace Simulation
 
 		std::vector<GameState*> _states;
 		PlayerLogic* _playerLogic;
+		WorldLogic* _worldLogic;
 		std::vector<EventBase*> _events;
 	};
 }

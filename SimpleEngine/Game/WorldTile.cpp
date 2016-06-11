@@ -9,9 +9,9 @@ namespace Game
 		this->x = x;
 		this->y = y;
 
-		_renderable = new Renderer::SpriteRenderable(spriteID, glm::vec2(1.0f, 1.0f));
+		_renderable = new Renderer::SpriteRenderable(spriteID, glm::vec2(0.1f, 0.1f));
 
-		_renderable->SetPosition(glm::vec3(x, y, 0.0f));
+		_renderable->SetPosition(glm::vec3((float)x/10, (float)y/10, 0.0f));
 	}
 
 	WorldTile::~WorldTile()

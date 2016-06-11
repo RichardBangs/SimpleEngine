@@ -6,6 +6,8 @@ namespace Simulation
 {
 	class PlayerState;
 	class EventBase;
+	class WorldObjectState;
+	class WorldState;
 
 	class GameState
 	{
@@ -16,6 +18,7 @@ namespace Simulation
 		void Tick(std::vector<EventBase*> eventsThisTick, GameState* previousGameState);
 
 		std::vector<PlayerState*> _players;
+		WorldState* _world;
 
 	private:
 		int _frame;

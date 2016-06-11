@@ -47,6 +47,9 @@ namespace Renderer
 
 	void RenderableManager::Render()
 	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		//	Loop through and render all renderables :)
 		std::vector<BaseRenderable*>::iterator it;
 		for (it = _renderables.begin(); it < _renderables.end(); ++it)

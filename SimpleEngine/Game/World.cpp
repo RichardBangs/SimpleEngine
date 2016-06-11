@@ -1,6 +1,9 @@
 #include "World.h"
 
 #include "WorldTileGrass.h"
+#include "WorldObjectTree.h"
+
+#include <stdlib.h>
 
 namespace Game
 {
@@ -8,7 +11,7 @@ namespace Game
 
 	World::World()
 	{
-		const int worldSize = 8;
+		const int worldSize = 16;
 
 		for (int x = 0; x < worldSize; x++)
 		{

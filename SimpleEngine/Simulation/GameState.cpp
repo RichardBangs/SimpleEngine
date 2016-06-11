@@ -3,16 +3,24 @@
 #include "PlayerState.h"
 #include "Events\EventBase.h"
 #include "Events\PlayerCreatedEvent.h"
+#include "Events\ObjectCreatedEvent.h"
+
+#include "WorldState.h"
+
+#include "WorldObjectStateTree.h"
 
 namespace Simulation
 {
 	GameState::GameState(int frame)
 	{
 		_frame = frame;
+
+		_world = new WorldState();
 	}
 
 	GameState::~GameState()
 	{
+		delete _world;
 	}
 
 	void GameState::Tick(std::vector<EventBase*> eventsThisTick, GameState* previousGameState)
@@ -33,6 +41,13 @@ namespace Simulation
 			case eEventType::PlayerCreated:
 				_players.push_back(new PlayerState(dynamic_cast<PlayerCreatedEvent*>(myEvent)->_id));
 				break;
+
+			case eEventType::ObjectCreated:
+				
+				auto newObjectEvent = dynamic_cast<ObjectCreatedEvent*>(myEvent);
+				auto newTree = new WorldObjectStateTree(newObjectEvent->_id, newObjectEvent->_x, newObjectEvent->_y);
+
+				_world->_objects.push_back(newTree);
 			}
 		}
 	}

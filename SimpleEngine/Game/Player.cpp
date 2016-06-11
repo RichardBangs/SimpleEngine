@@ -10,6 +10,7 @@
 
 #include "Simulation\SimulationManager.h"
 #include "Simulation\Events\PlayerMoveEvent.h"
+#include "Simulation\Events\PlayerInteractEvent.h"
 #include "Simulation\PlayerState.h"
 
 #include <iostream>
@@ -49,7 +50,7 @@ namespace Game
 	
 	void Player::UpdateAnimation(float dt)
 	{
-		const float animationSpeed = 2.0f;	//	world units per second.
+		const float animationSpeed = 0.5f;	//	world units per second.
 
 		float maxDistanceThisUpdate = animationSpeed * dt;
 
@@ -71,10 +72,8 @@ namespace Game
 	void Player::OnMouseInput(int button, int state, int x, int y)
 	{
 		const int leftMouseButton = 0;
+		const int rightMouseButton = 1;
 		const int mouseUpState = 1;
-
-		if (button != leftMouseButton)
-			return;
 
 		if (state != mouseUpState)
 			return;
@@ -90,7 +89,25 @@ namespace Game
 			-deltaPositionInScreenSpace.y * World::WorldScale / Renderer::Camera::Instance().Scale.y,
 			0.0f);
 
-		auto myMoveEvent = new Simulation::PlayerMoveEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, targetPosition);
+		targetPosition.x = glm::round(targetPosition.x * 10) / 10;
+		targetPosition.y = glm::round(targetPosition.y * 10) / 10;
+		targetPosition.z = glm::round(targetPosition.z * 10) / 10;
+
+		if (button == leftMouseButton)
+			TriggerMove(targetPosition);
+		else if (button == rightMouseButton)
+			TriggerInteract(targetPosition);
+	}
+
+	void Player::TriggerMove(glm::vec3 position)
+	{
+		auto myMoveEvent = new Simulation::PlayerMoveEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, position);
+		Simulation::SimulationManager::Instance().AddEvent(myMoveEvent);
+	}
+
+	void Player::TriggerInteract(glm::vec3 position)
+	{
+		auto myMoveEvent = new Simulation::PlayerInteractEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, position);
 		Simulation::SimulationManager::Instance().AddEvent(myMoveEvent);
 	}
 }

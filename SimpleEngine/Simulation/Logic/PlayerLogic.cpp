@@ -4,6 +4,7 @@
 #include "..\GameState.h"
 #include "..\Events\EventBase.h"
 #include "..\Events\PlayerMoveEvent.h"
+#include "..\Events\PlayerInteractEvent.h"
 
 namespace Simulation
 {
@@ -27,6 +28,10 @@ namespace Simulation
 			case eEventType::PlayerMove:
 				OnPlayerMove(thisPlayer, dynamic_cast<PlayerMoveEvent*>(myEvent));
 				break;
+
+			case eEventType::PlayerInteract:
+				OnPlayerInteract(thisPlayer, dynamic_cast<PlayerInteractEvent*>(myEvent));
+				break;
 			}
 		}
 	}
@@ -37,5 +42,12 @@ namespace Simulation
 			return;
 
 		thisPlayer->_Position = playerMoveEvent->_Position;
+	}
+
+	void PlayerLogic::OnPlayerInteract(PlayerState* thisPlayer, PlayerInteractEvent* playerInteractEvent)
+	{
+		if (thisPlayer->_id != playerInteractEvent->_id)
+			return;
+
 	}
 }

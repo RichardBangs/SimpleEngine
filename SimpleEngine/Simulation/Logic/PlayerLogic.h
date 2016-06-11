@@ -10,6 +10,7 @@ namespace Simulation
 	class GameState;
 	class PlayerState;
 	class PlayerMoveEvent;
+	class PlayerInteractEvent;
 
 	class PlayerLogic : public LogicBase<PlayerState>
 	{
@@ -20,5 +21,6 @@ namespace Simulation
 		virtual void Tick(PlayerState* thisPlayer, GameState* stateLastFrame, std::vector<EventBase*> eventsThisFrame);
 
 		void OnPlayerMove(PlayerState* thisPlayer, PlayerMoveEvent* playerMoveEvent);
+		void OnPlayerInteract(PlayerState* thisPlayer, PlayerInteractEvent* playerInteractEvent);
 	};
 }

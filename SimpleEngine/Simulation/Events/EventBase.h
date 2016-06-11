@@ -5,7 +5,10 @@ namespace Simulation
 	enum eEventType
 	{
 		PlayerCreated,
-		PlayerMove
+		PlayerMove,
+		PlayerInteract,
+
+		ObjectCreated
 	};
 
 

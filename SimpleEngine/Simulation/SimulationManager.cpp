@@ -1,6 +1,7 @@
 #include "SimulationManager.h"
 
 #include "Logic\PlayerLogic.h"
+#include "WorldLogic.h"
 #include "GameState.h"
 #include "Events\EventBase.h"
 
@@ -10,10 +11,13 @@ namespace Simulation
 	{
 		_frame = -1;
 		_playerLogic = new PlayerLogic();
+		_worldLogic = new WorldLogic();
 	}
 
 	SimulationManager::~SimulationManager()
 	{
+		delete _playerLogic;
+		delete _worldLogic;
 	}
 
 	GameState* SimulationManager::Tick()
@@ -59,6 +63,8 @@ namespace Simulation
 
 			_playerLogic->Tick(myPlayerState, previousGameState, eventsThisFrame);
 		}
+
+		_worldLogic->Tick(currentGameState->_world, previousGameState, eventsThisFrame);
 
 		return currentGameState;
 	}

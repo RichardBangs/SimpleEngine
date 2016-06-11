@@ -14,11 +14,19 @@
 #include "Simulation\GameState.h"
 #include "Simulation\PlayerState.h"
 #include "Simulation\Events\PlayerCreatedEvent.h"
+#include "Simulation\Events\ObjectCreatedEvent.h"
+
+#include "Simulation\WorldState.h"
+#include "Simulation\WorldObjectState.h"
+
+#include "WorldObjectTree.h"
 
 #include "InputManager.h"
 
 #include "World.h"
 #include "Player.h"
+
+#include "glm.hpp"
 
 namespace Game
 {
@@ -39,6 +47,8 @@ namespace Game
 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 1, 27, "City::Grass-Bottom");
 		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 2, 27, "City::Grass-BottomRight");
 
+		Renderer::SpriteLoader::RegisterSprite(cityAtlasPath, 34, 13, "City::Tree");
+
 
 		const char* charactersAtlasPath = "textures\\CharactersSpriteAtlas.png";
 		Renderer::SpriteLoader::RegisterAtlas(charactersAtlasPath, 16, 16, 1, 1);
@@ -53,6 +63,9 @@ namespace Game
 		Simulation::SimulationManager::Create();
 		Simulation::SimulationManager::Instance().AddEvent(new Simulation::PlayerCreatedEvent(0, _idOfLocalPlayer));
 		Simulation::SimulationManager::Instance().AddEvent(new Simulation::PlayerCreatedEvent(100, 74));
+		Simulation::SimulationManager::Instance().AddEvent(new Simulation::ObjectCreatedEvent(0, 0, 1, 1));
+		Simulation::SimulationManager::Instance().AddEvent(new Simulation::ObjectCreatedEvent(50, 1, 6, 4));
+		Simulation::SimulationManager::Instance().AddEvent(new Simulation::ObjectCreatedEvent(100, 2, 10, 7));
 	}
 
 	GameManager::~GameManager()
@@ -71,6 +84,16 @@ namespace Game
 				_players[playerState->_id] = new Player(playerState->_id, playerState->_id == _idOfLocalPlayer);
 
 			_players[playerState->_id]->UpdateView(playerState, dt);
+		}
+		
+		for (auto it = gameState->_world->_objects.begin(); it < gameState->_world->_objects.end(); ++it)
+		{
+			Simulation::WorldObjectState* objectState = *it;
+			
+			if (_world->_objects.count(objectState->_id) == 0)
+				_world->_objects[objectState->_id] = (WorldObject*)new WorldObjectTree(objectState->_x, objectState->_y);
+
+			//_world->_objects[objectState->_id]->Update
 		}
 	}
 

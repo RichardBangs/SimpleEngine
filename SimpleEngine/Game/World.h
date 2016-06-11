@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 
 #include "Utils/Singleton.h"
 
@@ -17,9 +18,7 @@ namespace Game
 
 		const static float WorldScale;	//	Number of tiles height-wise that fit on screen (aspect ratio will vary the number in width wise).
 
-	private:
-
 		std::vector<WorldTile*> _tiles;
-		std::vector<WorldObject*> _objects;
+		std::map<int, WorldObject*> _objects;
 	};
 }

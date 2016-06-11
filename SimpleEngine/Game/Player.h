@@ -23,6 +23,9 @@ namespace Game
 		void OnKeyboardInput(char key);
 		void OnMouseInput(int button, int state, int x, int y);
 
+		void TriggerMove(glm::vec3 position);
+		void TriggerInteract(glm::vec3 position);
+
 		Renderer::SpriteRenderable* _renderable;
 
 		glm::vec3 _position;

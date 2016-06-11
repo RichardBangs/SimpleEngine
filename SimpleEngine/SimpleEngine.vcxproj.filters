@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Simulation\Events">
       <UniqueIdentifier>{fcd4dcf8-758d-40fd-a4a5-b451c713f69b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Simulation\Objects">
+      <UniqueIdentifier>{428ad788-5105-44dd-85a8-7b8a7d0bbf4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -120,9 +123,6 @@
     <ClCompile Include="Simulation\SimulationManager.cpp">
       <Filter>Source Files\Simulation</Filter>
     </ClCompile>
-    <ClCompile Include="Simulation\WorldState.cpp">
-      <Filter>Source Files\Simulation\State</Filter>
-    </ClCompile>
     <ClCompile Include="Simulation\PlayerState.cpp">
       <Filter>Source Files\Simulation\State</Filter>
     </ClCompile>
@@ -143,6 +143,27 @@
     </ClCompile>
     <ClCompile Include="Simulation\Events\PlayerCreatedEvent.cpp">
       <Filter>Source Files\Simulation\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\WorldObjectTree.cpp">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Events\PlayerInteractEvent.cpp">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\WorldObjectState.cpp">
+      <Filter>Source Files\Simulation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\WorldObjectStateTree.cpp">
+      <Filter>Source Files\Simulation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\Events\ObjectCreatedEvent.cpp">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\WorldState.cpp">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Simulation\WorldLogic.cpp">
+      <Filter>Source Files\Simulation\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +236,6 @@
     <ClInclude Include="Simulation\SimulationManager.h">
       <Filter>Source Files\Simulation</Filter>
     </ClInclude>
-    <ClInclude Include="Simulation\WorldState.h">
-      <Filter>Source Files\Simulation\State</Filter>
-    </ClInclude>
     <ClInclude Include="Simulation\PlayerState.h">
       <Filter>Source Files\Simulation\State</Filter>
     </ClInclude>
@@ -238,6 +256,27 @@
     </ClInclude>
     <ClInclude Include="Simulation\Events\PlayerCreatedEvent.h">
       <Filter>Source Files\Simulation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\WorldObjectTree.h">
+      <Filter>Source Files\Game\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Events\PlayerInteractEvent.h">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\WorldObjectState.h">
+      <Filter>Source Files\Simulation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\WorldObjectStateTree.h">
+      <Filter>Source Files\Simulation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\Events\ObjectCreatedEvent.h">
+      <Filter>Source Files\Simulation\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\WorldState.h">
+      <Filter>Source Files\Simulation\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Simulation\WorldLogic.h">
+      <Filter>Source Files\Simulation\Logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
