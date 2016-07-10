@@ -11,7 +11,8 @@ namespace Simulation
 	class PlayerLogic;
 	class WorldLogic;
 
-	class SimulationManager : public Utils::Singleton<SimulationManager>	{
+	class SimulationManager : public Utils::Singleton<SimulationManager>
+	{
 	public:
 		SimulationManager();
 		~SimulationManager();
@@ -20,7 +21,7 @@ namespace Simulation
 
 		void AddEvent(EventBase* newEvent);
 
-		int Frame() { return _frame; }
+		inline int Frame() { return _frame; }
 
 	private:
 
@@ -29,6 +30,10 @@ namespace Simulation
 		std::vector<GameState*> _states;
 		PlayerLogic* _playerLogic;
 		WorldLogic* _worldLogic;
+
+		std::vector<EventBase*> _local;
 		std::vector<EventBase*> _events;
+
+		int _ticksUntilNextServerPoll;
 	};
 }

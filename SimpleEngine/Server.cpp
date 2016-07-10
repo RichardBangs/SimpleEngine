@@ -22,4 +22,9 @@ namespace Simulation
 	{
 		_server->send_message(eventBase);
 	}
+
+	void ServerManager::PollMessages()
+	{
+		_server->poll_messages();
+	}
 }

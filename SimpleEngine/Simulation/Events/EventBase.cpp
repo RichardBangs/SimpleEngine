@@ -42,6 +42,34 @@ namespace Simulation
 		result[U("Type")] = web::json::value::number((int)GetType());
 	}
 
+	bool EventBase::operator== (const EventBase &other)
+	{
+		return _frame == other._frame;
+	}
+
+	//static
+	EventBase* EventBase::CreateFromTypeCopy(EventBase* original)
+	{
+		switch (original->GetType())
+		{
+		case eEventType::PlayerCreated:
+			return new PlayerCreatedEvent(*static_cast<const PlayerCreatedEvent*>(original));
+
+		case eEventType::PlayerMove:
+			return new PlayerMoveEvent(*static_cast<const PlayerMoveEvent*>(original));
+
+		case eEventType::PlayerInteract:
+			return new PlayerInteractEvent(*static_cast<const PlayerInteractEvent*>(original));
+
+		case eEventType::ObjectCreated:
+			return new ObjectCreatedEvent(*static_cast<const ObjectCreatedEvent*>(original));
+		}
+
+		assert("UNEXPECTED EVENT TYPE.");
+
+		return NULL;
+	}
+
 	//static
 	EventBase* EventBase::CreateFromType(eEventType eventType)
 	{

@@ -17,10 +17,15 @@ namespace Simulation
 		ServerManager();
 		~ServerManager();
 
+		void PollMessages();
 		void SendMessage(EventBase* eventBase);
+
+		std::vector<Simulation::EventBase*> RemoteMessages() { return _server->RemoteMessages(); }
 
 	private:
 
 		Restful::Server* _server;
+
+		std::vector<EventBase*> _messages;
 	};
 }

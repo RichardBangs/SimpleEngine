@@ -30,6 +30,10 @@ namespace Simulation
 		virtual void PopulateFromJSON(web::json::object& json);
 		virtual void ToJSON(web::json::value& result);
 
+		bool operator== (const EventBase &other);
+
+		static EventBase* CreateFromTypeCopy(EventBase* original);
+
 	protected:
 		EventBase() {}
 		static EventBase* CreateFromType(eEventType eventType);

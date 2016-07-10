@@ -26,13 +26,13 @@ namespace Restful
 	{
 		delete listener;
 
-		for (auto it = Events.begin(); it < Events.end(); ++it)
-		{
-			auto myEvent = *it;
+		for (auto it = Local.begin(); it < Local.end(); ++it)
+			delete *it;
+		Local.clear();
 
-			delete myEvent;
-		}
-		Events.clear();
+		for (auto it = Remote.begin(); it < Remote.end(); ++it)
+			delete *it;
+		Remote.clear();
 	}
 
 	void Server::handle_post(web::http::http_request request)
@@ -43,7 +43,20 @@ namespace Restful
 		
 		auto myEvent = Simulation::EventBase::CreateFromJSON(request.extract_json().get().as_object());
 		
-		Events.push_back(myEvent);
+		std::vector<Simulation::EventBase*>::iterator it;
+		for (it = Local.begin(); it != Local.end(); ++it)
+		{
+			if ((*it)->Frame() > myEvent->Frame())
+				break;
+		}
+		
+		//	Local list is ALWAYS in order of event FRAME.
+		if (Local.size() == 0)
+			Local.push_back(myEvent);
+		//else if (it == Local.begin())
+			//Local.insert(it+1, myEvent);
+		else
+			Local.insert(it, myEvent);
 
 		request.reply(status_codes::OK);
 	}
@@ -52,7 +65,7 @@ namespace Restful
 	{
 		ucout << "GET PROCESSED" << std::endl;
 
-		request.reply(status_codes::OK, MessageListAsJSON());
+		request.reply(status_codes::OK, MessageListAsJSON(Local));
 	}
 
 	void Server::send_message(Simulation::EventBase* newEvent)
@@ -65,12 +78,31 @@ namespace Restful
 		webClient.request(web::http::methods::POST, U(""), json).wait();
 	}
 
-	web::json::value Server::MessageListAsJSON()
+	void Server::poll_messages()
+	{
+		web::http::client::http_client webClient(web::http::uri_builder(U("http://localhost:1234")).append_path(U("test")).to_string());
+
+		webClient.request(web::http::methods::GET).then([=](web::http::http_response reponse)
+		{
+			std::vector<Simulation::EventBase*> messages;
+
+			MessageListFromJSON(messages, reponse.extract_json().get());
+
+			auto oldList = Remote;
+			Remote = messages;
+
+			for (auto it = oldList.begin(); it < oldList.end(); ++it)
+				delete *it;
+			oldList.clear();
+		});
+	}
+
+	web::json::value Server::MessageListAsJSON(std::vector<Simulation::EventBase*>& messages) const
 	{
 		auto result = web::json::value::array();
 		
 		int index = 0;
-		for (auto it = Events.begin(); it != Events.end(); ++it)
+		for (auto it = messages.begin(); it != messages.end(); ++it)
 		{
 			web::json::value& json = web::json::value::object();
 			(*it)->ToJSON(json);
@@ -79,5 +111,16 @@ namespace Restful
 		}
 
 		return result;
+	}
+
+	void Server::MessageListFromJSON(std::vector<Simulation::EventBase*>& messages, web::json::value& json) const
+	{
+		auto myArray = json.as_array();
+
+		for (auto it = myArray.begin(); it != myArray.end(); ++it)
+		{
+			auto myEvent = Simulation::EventBase::CreateFromJSON((*it).as_object());
+			messages.push_back(myEvent);
+		}
 	}
 }
