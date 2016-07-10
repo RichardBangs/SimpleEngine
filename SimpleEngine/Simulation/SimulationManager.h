@@ -11,8 +11,7 @@ namespace Simulation
 	class PlayerLogic;
 	class WorldLogic;
 
-	class SimulationManager : public Utils::Singleton<SimulationManager>
-	{
+	class SimulationManager : public Utils::Singleton<SimulationManager>	{
 	public:
 		SimulationManager();
 		~SimulationManager();

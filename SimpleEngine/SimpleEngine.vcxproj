@@ -146,11 +146,7 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClCompile Include="Renderer\Textures\TextureLoader.cpp" />
     <ClCompile Include="Renderer\VertexFormat.cpp" />
     <ClCompile Include="Renderer\WindowManager.cpp" />
-    <ClCompile Include="Simulation\Events\EventBase.cpp" />
-    <ClCompile Include="Simulation\Events\ObjectCreatedEvent.cpp" />
-    <ClCompile Include="Simulation\Events\PlayerCreatedEvent.cpp" />
-    <ClCompile Include="Simulation\Events\PlayerInteractEvent.cpp" />
-    <ClCompile Include="Simulation\Events\PlayerMoveEvent.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Simulation\GameState.cpp" />
     <ClCompile Include="Simulation\Logic\LogicBase.cpp" />
     <ClCompile Include="Simulation\Logic\PlayerLogic.cpp" />
@@ -162,11 +158,7 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClCompile Include="Simulation\WorldState.cpp" />
     <ClInclude Include="Game\WorldObjectTree.h" />
     <ClInclude Include="Renderer\WindowManager.h" />
-    <ClInclude Include="Simulation\Events\EventBase.h" />
-    <ClInclude Include="Simulation\Events\ObjectCreatedEvent.h" />
-    <ClInclude Include="Simulation\Events\PlayerCreatedEvent.h" />
-    <ClInclude Include="Simulation\Events\PlayerInteractEvent.h" />
-    <ClInclude Include="Simulation\Events\PlayerMoveEvent.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Simulation\GameState.h" />
     <ClInclude Include="Simulation\Logic\LogicBase.h" />
     <ClInclude Include="Simulation\Logic\PlayerLogic.h" />
@@ -202,7 +194,25 @@ copy "$(SolutionDir)Libs\glew\dll\glew32.dll" "$(SolutionDir)Debug\glew32.dll"</
     <ClInclude Include="Renderer\VertexFormat.h" />
     <ClInclude Include="Utils\Singleton.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Restful\Restful.vcxproj">
+      <Project>{929f83d4-80d5-481b-9ce0-0ba2fd5bfaef}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.vcxproj">
+      <Project>{22916573-55c5-4ba3-ad85-b22de9f87d04}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets" Condition="Exists('..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.2.8.0\build\native\cpprestsdk.v140.windesktop.msvcstl.dyn.rt-dyn.targets'))" />
+  </Target>
 </Project>

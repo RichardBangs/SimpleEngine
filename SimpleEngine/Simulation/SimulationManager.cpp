@@ -1,5 +1,6 @@
 #include "SimulationManager.h"
 
+#include "../Server.h"
 #include "Logic\PlayerLogic.h"
 #include "WorldLogic.h"
 #include "GameState.h"
@@ -71,6 +72,8 @@ namespace Simulation
 
 	void SimulationManager::AddEvent(EventBase* newEvent)
 	{
+		ServerManager::Instance().SendMessage(newEvent);
+
 		_events.push_back(newEvent);
 	}
 }

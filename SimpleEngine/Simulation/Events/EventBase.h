@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cpprest/json.h>
+
 namespace Simulation
 {
 	enum eEventType
@@ -16,13 +18,21 @@ namespace Simulation
 	{
 	public:
 		EventBase(int frame);
+
 		virtual ~EventBase();
 
 		virtual eEventType GetType() = 0;
 
 		inline int Frame() { return _frame; }
 
+		static EventBase* CreateFromJSON(web::json::object& json);
+
+		virtual void PopulateFromJSON(web::json::object& json);
+		virtual void ToJSON(web::json::value& result);
+
 	protected:
+		EventBase() {}
+		static EventBase* CreateFromType(eEventType eventType);
 
 		int _frame;
 	};

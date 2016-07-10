@@ -10,6 +10,8 @@
 #include "Renderer\Textures\TextureLoader.h"
 #include "Renderer\Textures\SpriteLoader.h"
 
+#include "../Server.h"
+
 #include "Simulation\SimulationManager.h"
 #include "Simulation\GameState.h"
 #include "Simulation\PlayerState.h"
@@ -55,6 +57,7 @@ namespace Game
 		
 		Renderer::SpriteLoader::RegisterSprite(charactersAtlasPath, 0, 17, "Characters::Hero0");
 
+		Simulation::ServerManager::Create();
 
 		_world = new World();
 
