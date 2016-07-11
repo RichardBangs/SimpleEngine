@@ -5,7 +5,7 @@ namespace Game
 	class WorldObjectTree : WorldObject
 	{
 	public:
-		WorldObjectTree(int x, int y);
+		WorldObjectTree(int id, int x, int y);
 		~WorldObjectTree();
 
 

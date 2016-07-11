@@ -3,7 +3,11 @@
 #include "glm.hpp"
 
 namespace Renderer { class SpriteRenderable; }
-namespace Simulation { class PlayerState; }
+namespace Simulation
+{
+	class PlayerState;
+	class GameState;
+}
 
 namespace Game
 {
@@ -15,8 +19,7 @@ namespace Game
 
 		void UpdateAnimation(float dt);
 
-		void UpdateView(Simulation::PlayerState* playerState, float dt);
-		void UpdateController();
+		void UpdateView(Simulation::PlayerState* playerState, Simulation::GameState* gameState, float dt);
 	
 	private:
 
@@ -33,5 +36,7 @@ namespace Game
 
 		int _id;
 		bool _isLocalPlayer;
+
+		Simulation::GameState* latestGameState;
 	};
 }

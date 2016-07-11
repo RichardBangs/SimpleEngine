@@ -21,6 +21,9 @@ namespace Simulation
 		WorldState* _world;
 
 	private:
+		
+		void CreateObject(EventBase* eventBase);
+
 		int _frame;
 	};
 }

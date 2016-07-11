@@ -16,39 +16,60 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{d44d3080-45e1-4083-945f-5078a91a3915}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\RequestEvents">
+      <UniqueIdentifier>{878db88e-532e-46b8-8d86-3de214e562df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\SimpleEngine\Simulation\Events\EventBase.cpp">
+    <ClCompile Include="Events\ObjectCreatedEvent.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\SimpleEngine\Simulation\Events\ObjectCreatedEvent.cpp">
+    <ClCompile Include="Events\ObjectDestroyedEvent.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\SimpleEngine\Simulation\Events\PlayerCreatedEvent.cpp">
+    <ClCompile Include="Events\PlayerCreatedEvent.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\SimpleEngine\Simulation\Events\PlayerInteractEvent.cpp">
+    <ClCompile Include="Events\PlayerInteractEvent.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
-    <ClCompile Include="..\SimpleEngine\Simulation\Events\PlayerMoveEvent.cpp">
+    <ClCompile Include="Events\PlayerMoveEvent.cpp">
       <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\EventBase.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="RequestEvents\PlayerCreateRequestEvent.cpp">
+      <Filter>Source Files\RequestEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="RequestEvents\RequestEventBase.cpp">
+      <Filter>Source Files\RequestEvents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SimpleEngine\Simulation\Events\EventBase.h">
+    <ClInclude Include="Events\ObjectCreatedEvent.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\SimpleEngine\Simulation\Events\ObjectCreatedEvent.h">
+    <ClInclude Include="Events\ObjectDestroyedEvent.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\SimpleEngine\Simulation\Events\PlayerCreatedEvent.h">
+    <ClInclude Include="Events\PlayerCreatedEvent.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\SimpleEngine\Simulation\Events\PlayerInteractEvent.h">
+    <ClInclude Include="Events\PlayerInteractEvent.h">
       <Filter>Source Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\SimpleEngine\Simulation\Events\PlayerMoveEvent.h">
+    <ClInclude Include="Events\PlayerMoveEvent.h">
       <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventBase.h">
+      <Filter>Source Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestEvents\PlayerCreateRequestEvent.h">
+      <Filter>Source Files\RequestEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="RequestEvents\RequestEventBase.h">
+      <Filter>Source Files\RequestEvents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

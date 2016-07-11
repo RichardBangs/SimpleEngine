@@ -7,8 +7,10 @@ namespace Game
 	class WorldObject
 	{
 	public:
-		WorldObject(int x, int y, const char* renderable);
+		WorldObject(int id, int x, int y, const char* renderable);
 		~WorldObject();
+
+		int _id;
 
 	private:
 		int _x, _y;

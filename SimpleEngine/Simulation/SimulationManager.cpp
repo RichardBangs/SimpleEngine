@@ -4,7 +4,10 @@
 #include "Logic\PlayerLogic.h"
 #include "WorldLogic.h"
 #include "GameState.h"
+
+#include "RequestEvents\RequestEventBase.h"
 #include "Events\EventBase.h"
+
 
 namespace Simulation
 {
@@ -55,23 +58,17 @@ namespace Simulation
 
 		} while (**itLocal == **itRemote);
 
-		if (itLocal == _local.end() || itRemote == _events.end())
+		if (_local.size() == _events.size())
+			runFromTick = _frame;
+		else
 		{
-			if (_local.size() == _events.size())
-				runFromTick = _frame;
-			else
-			{
-				runFromTick = (*itRemote)->Frame();
+			runFromTick = (*itRemote)->Frame();
 
-				if (runFromTick > _states.size())
-				{
-					runFromTick = _states.size();
-				}
+			if (runFromTick > _states.size())
+			{
+				runFromTick = _states.size();
 			}
 		}
-
-		if (_frame == 500)
-			runFromTick = 0;
 
 		while(!_local.empty() && _local.back()->Frame() >= runFromTick)
 		{
@@ -141,12 +138,10 @@ namespace Simulation
 		return _states[_frame-1];
 	}
 
-	void SimulationManager::AddEvent(EventBase* newEvent)
+	void SimulationManager::RequestEvent(RequestEventBase* newEvent)
 	{
 		ServerManager::Instance().SendMessage(newEvent);
 
 		std::cout << "ADDEVENT: " << newEvent->GetType() << std::endl;
-
-		//_events.push_back(newEvent);
 	}
 }

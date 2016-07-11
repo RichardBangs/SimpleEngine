@@ -42,7 +42,16 @@ namespace Renderer
 
 	void RenderableManager::RemoveRenderable(BaseRenderable* newRenderable)
 	{
-		//	TODO: Implement me.
+		for (auto it = _renderables.begin(); it != _renderables.end(); ++it)
+		{
+			if ((*it) != newRenderable)
+				continue;
+
+			_renderables.erase(it);
+			break;
+		}
+
+		assert("Failed to remove renderable.");
 	}
 
 	void RenderableManager::Render()

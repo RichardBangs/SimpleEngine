@@ -4,7 +4,8 @@
 #include <cpprest\http_client.h>
 #include <stdio.h>
 
-#include "../SimpleEngine/Simulation/Events/EventBase.h"
+#include "../Shared/Events/EventBase.h"
+#include "../Shared/RequestEvents/RequestEventBase.h"
 
 #include "Message.h"
 
@@ -12,6 +13,9 @@ using namespace web::http;
 
 namespace Restful
 {
+	//static
+	std::vector<Simulation::EventBase*> Server::Remote;
+
 	Server::Server(utility::string_t address)
 	{
 		ucout << "LISTENING ON: " << address << std::endl;
@@ -35,30 +39,39 @@ namespace Restful
 		Remote.clear();
 	}
 
+	bool Server::checkForServer()
+	{
+		std::cout << "CHECKING FOR SERVER - PLEASE WAIT" << std::endl;
+
+		web::http::client::http_client webClient(web::http::uri_builder(U("http://localhost:1234")).append_path(U("test")).to_string());
+		try
+		{
+			return webClient.request(web::http::methods::GET, U("")).get().status_code() == status_codes::OK;
+		}
+		catch (web::http::http_exception exc)
+		{
+			std::cout << exc.what() << std::endl;
+		}
+
+		return false;
+	}
+
 	void Server::handle_post(web::http::http_request request)
 	{
 		ucout << "POST: " << request.to_string().c_str() << std::endl;
 
 		auto query = web::http::uri::split_query(web::http::uri::decode(request.relative_uri().query()));
 		
-		auto myEvent = Simulation::EventBase::CreateFromJSON(request.extract_json().get().as_object());
-		
-		std::vector<Simulation::EventBase*>::iterator it;
-		for (it = Local.begin(); it != Local.end(); ++it)
-		{
-			if ((*it)->Frame() > myEvent->Frame())
-				break;
-		}
-		
-		//	Local list is ALWAYS in order of event FRAME.
-		if (Local.size() == 0)
-			Local.push_back(myEvent);
-		//else if (it == Local.begin())
-			//Local.insert(it+1, myEvent);
-		else
-			Local.insert(it, myEvent);
+		auto myEvent = Simulation::RequestEventBase::CreateFromJSON(request.extract_json().get().as_object());
+
+		IncomingRequests.push_back(myEvent);
 
 		request.reply(status_codes::OK);
+	}
+
+	void Server::AddMessage(Simulation::EventBase* message)
+	{
+		Local.push_back(message);
 	}
 
 	void Server::handle_get(web::http::http_request request)
@@ -68,7 +81,8 @@ namespace Restful
 		request.reply(status_codes::OK, MessageListAsJSON(Local));
 	}
 
-	void Server::send_message(Simulation::EventBase* newEvent)
+	//static
+	void Server::send_message(Simulation::RequestEventBase* newEvent)
 	{
 		web::http::client::http_client webClient(web::http::uri_builder(U("http://localhost:1234")).append_path(U("test")).to_string());
 		
@@ -78,6 +92,7 @@ namespace Restful
 		webClient.request(web::http::methods::POST, U(""), json).wait();
 	}
 
+	//static
 	void Server::poll_messages()
 	{
 		web::http::client::http_client webClient(web::http::uri_builder(U("http://localhost:1234")).append_path(U("test")).to_string());

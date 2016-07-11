@@ -1,6 +1,8 @@
 #pragma once
 
-#include <vector>
+#include <map>
+
+#include "glm.hpp"
 
 namespace Simulation
 {
@@ -12,6 +14,8 @@ namespace Simulation
 		WorldState();
 		~WorldState() {}
 
-		std::vector<WorldObjectState*> _objects;
+		WorldObjectState* GetClosestObject(glm::vec3 position, float maxRange);
+
+		std::map<int, WorldObjectState*> _objects;
 	};
 }

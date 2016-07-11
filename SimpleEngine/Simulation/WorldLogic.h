@@ -9,6 +9,7 @@ namespace Simulation
 	class EventBase;
 	class GameState;
 	class WorldState;
+	class PlayerInteractEvent;
 
 	class WorldLogic : public LogicBase<WorldState>
 	{

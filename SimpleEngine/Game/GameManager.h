@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost\uuid\uuid.hpp>
+
 #include "glm.hpp"
 
 #include <map>
@@ -20,11 +22,15 @@ namespace Game
 		void OnUpdate(float dt);
 		void OnRender();
 
+		void ServerUpdate();
+		void ClientUpdate(float dt);
+
 	private:
 
 		World* _world;
 		std::map<int, Player*> _players;
 
+		boost::uuids::uuid _uuidOfLocalPlayerCreation;
 		int _idOfLocalPlayer;
 	};
 }

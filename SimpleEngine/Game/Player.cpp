@@ -9,9 +9,14 @@
 #include "Renderer\SpriteRenderable.h"
 
 #include "Simulation\SimulationManager.h"
-#include "Simulation\Events\PlayerMoveEvent.h"
-#include "Simulation\Events\PlayerInteractEvent.h"
+#include "Events\PlayerMoveEvent.h"
+#include "Events\PlayerInteractEvent.h"
+#include "Events\ObjectDestroyedEvent.h"
 #include "Simulation\PlayerState.h"
+#include "Simulation\GameState.h"
+#include "Simulation\WorldState.h"
+#include "Simulation\WorldObjectState.h"
+
 
 #include <iostream>
 
@@ -36,8 +41,9 @@ namespace Game
 	{
 	}
 
-	void Player::UpdateView(Simulation::PlayerState* playerState, float dt)
+	void Player::UpdateView(Simulation::PlayerState* playerState, Simulation::GameState* gameState, float dt)
 	{
+		this->latestGameState = gameState;
 		this->_targetPosition = playerState->_Position;	//TODO: CANT DO THIS REALLY! Server needs to control tick by tick position...
 
 		UpdateAnimation(dt);
@@ -72,7 +78,7 @@ namespace Game
 	void Player::OnMouseInput(int button, int state, int x, int y)
 	{
 		const int leftMouseButton = 0;
-		const int rightMouseButton = 1;
+		const int rightMouseButton = 2;
 		const int mouseUpState = 1;
 
 		if (state != mouseUpState)
@@ -101,13 +107,31 @@ namespace Game
 
 	void Player::TriggerMove(glm::vec3 position)
 	{
+		/*
 		auto myMoveEvent = new Simulation::PlayerMoveEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, position);
 		Simulation::SimulationManager::Instance().AddEvent(myMoveEvent);
+		*/
 	}
 
 	void Player::TriggerInteract(glm::vec3 position)
 	{
-		auto myMoveEvent = new Simulation::PlayerInteractEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, position);
-		Simulation::SimulationManager::Instance().AddEvent(myMoveEvent);
+		/*
+		const float maxDistance = 0.2f;
+		Simulation::WorldObjectState* worldObject = this->latestGameState->_world->GetClosestObject(position, maxDistance);	//	use mouse pointer as target.
+
+		glm::vec3 pos = glm::vec3(worldObject->_x/10.0f, worldObject->_y/10.0f, 0.0f);
+		if (glm::distance(_position, pos) > maxDistance)	//	distance check to playuer.
+			return;
+
+		const int NoObjectFound = NULL;
+		if (worldObject == NoObjectFound)
+			return;
+
+		auto myInteractEvent = new Simulation::PlayerInteractEvent(Simulation::SimulationManager::Instance().Frame() + 1, _id, worldObject->_id, position);
+		Simulation::SimulationManager::Instance().AddEvent(myInteractEvent);
+
+		auto objectDestroyEvent = new Simulation::ObjectDestroyedEvent(Simulation::SimulationManager::Instance().Frame() + 1, worldObject->_id);
+		Simulation::SimulationManager::Instance().AddEvent(objectDestroyEvent);
+		*/
 	}
 }

@@ -4,8 +4,10 @@
 
 namespace Game
 {
-	WorldObject::WorldObject(int x, int y, const char* spriteID)
+	WorldObject::WorldObject(int id, int x, int y, const char* spriteID)
 	{
+		this->_id = id;
+
 		this->_x = x;
 		this->_y = y;
 		
@@ -16,5 +18,6 @@ namespace Game
 
 	WorldObject::~WorldObject()
 	{
+		delete _renderable;
 	}
 }

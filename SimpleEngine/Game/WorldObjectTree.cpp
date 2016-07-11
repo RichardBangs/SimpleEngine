@@ -4,8 +4,8 @@
 
 namespace Game
 {
-	WorldObjectTree::WorldObjectTree(int x, int y)
-		: WorldObject(x, y, "City::Tree")
+	WorldObjectTree::WorldObjectTree(int id, int x, int y)
+		: WorldObject(id, x, y, "City::Tree")
 	{
 	}
 

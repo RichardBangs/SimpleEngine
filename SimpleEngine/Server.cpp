@@ -1,16 +1,11 @@
 #include "Server.h"
 
-#include "Simulation\Events\EventBase.h"
+#include "RequestEvents\RequestEventBase.h"
 
 namespace Simulation
 {
 	ServerManager::ServerManager()
 	{
-		web::http::uri_builder uri(U("http://localhost:1234"));
-		uri.append_path(U("test"));
-
-		_server = new Restful::Server(uri.to_string());
-		_server->open();
 	}
 
 	ServerManager::~ServerManager()
@@ -18,13 +13,31 @@ namespace Simulation
 		delete _server;
 	}
 
-	void ServerManager::SendMessage(EventBase* eventBase)
+	void ServerManager::Start()
 	{
-		_server->send_message(eventBase);
+		_networkMode = eServerMode::Client;
+
+		if (!_server->checkForServer())
+		{
+			std::cout << "SERVER NOT FOUND - STARTING NEW SERVER" << std::endl;
+
+			web::http::uri_builder uri(U("http://localhost:1234"));
+			uri.append_path(U("test"));
+
+			_server = new Restful::Server(uri.to_string());
+			_server->open();
+
+			_networkMode |= eServerMode::Server;
+		}
+	}
+
+	void ServerManager::SendMessage(RequestEventBase* eventBase)
+	{
+		Restful::Server::send_message(eventBase);
 	}
 
 	void ServerManager::PollMessages()
 	{
-		_server->poll_messages();
+		Restful::Server::poll_messages();
 	}
 }

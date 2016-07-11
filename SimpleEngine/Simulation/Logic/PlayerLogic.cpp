@@ -2,9 +2,9 @@
 
 #include "..\PlayerState.h"
 #include "..\GameState.h"
-#include "..\Events\EventBase.h"
-#include "..\Events\PlayerMoveEvent.h"
-#include "..\Events\PlayerInteractEvent.h"
+#include "Events\EventBase.h"
+#include "Events\PlayerMoveEvent.h"
+#include "Events\PlayerInteractEvent.h"
 
 namespace Simulation
 {
@@ -46,8 +46,9 @@ namespace Simulation
 
 	void PlayerLogic::OnPlayerInteract(PlayerState* thisPlayer, PlayerInteractEvent* playerInteractEvent)
 	{
-		if (thisPlayer->_id != playerInteractEvent->_id)
+		if (thisPlayer->_id != playerInteractEvent->_ObjectID)
 			return;
 
+		thisPlayer->_amountOfWood++;
 	}
 }

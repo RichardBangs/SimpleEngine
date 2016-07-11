@@ -6,8 +6,9 @@
 
 namespace Simulation
 {
-	class EventBase;	//	Each user input that changes some state in our simulation comes through from an Event.
-	class GameState;	//	Single Frame of State.
+	class EventBase;
+	class RequestEventBase;	//	Each user input that changes some state in our simulation comes through from an Event.
+	class GameState;		//	Single Frame of State.
 	class PlayerLogic;
 	class WorldLogic;
 
@@ -19,7 +20,7 @@ namespace Simulation
 
 		GameState* Tick();
 
-		void AddEvent(EventBase* newEvent);
+		void RequestEvent(RequestEventBase* newEvent);
 
 		inline int Frame() { return _frame; }
 

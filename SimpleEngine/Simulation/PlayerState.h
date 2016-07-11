@@ -12,5 +12,7 @@ namespace Simulation
 
 		glm::vec3 _Position;
 		int _id;
+
+		int _amountOfWood;
 	};
 }
